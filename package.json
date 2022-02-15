@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/NGArnold/RIMSProject/issues"
   },
-  "homepage": "https://github.com/NGArnold/RIMSProject#readme"
+  "homepage": "https://github.com/NGArnold/RIMSProject#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
