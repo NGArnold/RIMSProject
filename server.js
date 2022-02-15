@@ -41,7 +41,7 @@ app.get("/inventory", function(req,res){
 
 // route / get function calling the export module for manager data retrieval.
 
-app.get("/managers", function(req,res){
+app.get("/sales", function(req,res){
 
   dataServ.getManagers()
         .then((data) => {
