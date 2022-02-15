@@ -16,17 +16,17 @@ function onHttpStart() {
 
 // setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
-    res.sendFile(path.join(__dirname,"/views/home.html"));
+    res.sendFile(path.join(__dirname,"/login/home.html"));
 });
 
 // setup another route to listen on /about
-app.get("/about", function(req,res){
-    res.sendFile(path.join(__dirname,"/views/about.html"));
+app.get("/home", function(req,res){
+    res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
 // route / get function calling the export module for employee data validation & parsing.
 
-app.get("/employees", function(req,res){
+app.get("/inventory", function(req,res){
 
   dataServ.getEmployees()
         .then((data) => {
