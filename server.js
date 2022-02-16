@@ -14,14 +14,19 @@ function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
 };
 
-// setup a 'route' to listen on the default url path (http://localhost)
+/// setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req,res){
-    res.sendFile(path.join(__dirname,"/login/home.html"));
+  res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
-// setup another route to listen on /about
-app.get("/home", function(req,res){
-    res.sendFile(path.join(__dirname,"/views/home.html"));
+// setup another route to listen on /inventory
+app.get("/inventory", function(req,res){
+  res.sendFile(path.join(__dirname,"/views/inventory.html"));
+});
+
+// setup another route to listen on /sales
+app.get("/sales", function(req,res){
+res.sendFile(path.join(__dirname,"/views/sales.html"));
 });
 
 // route / get function calling the export module for employee data validation & parsing.
@@ -41,7 +46,7 @@ app.get("/inventory", function(req,res){
 
 // route / get function calling the export module for manager data retrieval.
 
-app.get("/sales", function(req,res){
+app.get("/managers", function(req,res){
 
   dataServ.getManagers()
         .then((data) => {
