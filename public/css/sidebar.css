@@ -52,8 +52,9 @@
     background: #16A085
   }
   
-  #sellbutton-wrapper{
-    margin-top: 8px;
-    margin-bottom: 50px;
-
+  .sidebar-nav li button{
+    position: absolute; 
+    bottom: 10px;
+    left: 25px;
+    width: 200px !important;
   }
