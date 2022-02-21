@@ -7,7 +7,7 @@ app.use(express.static('public/css'));
 var dataServ = require("./data-service.js");
 const res = require("express/lib/response");
 
-var HTTP_PORT = process.env.PORT || 8080;
+var HTTP_PORT = process.env.PORT || 8090;
 
 // call this function after the http server starts listening for requests
 function onHttpStart() {
