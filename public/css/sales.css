@@ -1,0 +1,36 @@
+/* Sales Container Styling */
+.button-container {
+    width: 400px;
+    background: lightgray;
+    overflow-y: auto;
+}
+
+/* Sales Button Styling */
+.button-container > a {
+    width: 100px;
+    height: 100px;
+    float: left;
+    background: white;   
+    margin: 15px;
+    text-align: center;
+    vertical-align: center;
+}
+
+/* Sales Table Styling */
+table, tr, th, td {
+
+    border: solid;
+    padding: 5px;
+    width: auto;
+    height: auto;
+}
+
+/* Sales h1 Styling */
+h1 {
+    text-align: center;
+}
+
+/* Sales Footer Styling */
+.footer {
+    text-align: right;
+}
