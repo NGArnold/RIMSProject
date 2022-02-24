@@ -43,40 +43,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <a href="#" class="btn btn-success" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                        <a href="#" class="btn btn-success" id="additem-button">Add Item</a>
 <h1>Inventory</h1>
 
-<table id="customers">
-  <tr>
-    <th>Product Name</th>
-    <th>Barcode</th>
-    <th>Quantity</th>
-    <th>Location</th>
-  </tr>
-  <tr>
-    <td>Shampoo</td>
-    <td>86529193</td>
-    <td>20</td>
-    <td>Store</td>
-  </tr>
-  <tr>
-    <td>Hairspray</td>
-    <td>48573920</td>
-    <td>8</td>
-    <td>Store</td>
-  </tr>
-  <tr>
-    <td>Red Nail Polish</td>
-    <td>96857334</td>
-    <td>12</td>
-    <td>Carrie</td>
-  </tr>
-  <tr>
-    <td>Conditioner</td>
-    <td>38127561</td>
-    <td>Store</td>
-    <td>Store</td>
-  </tr>
-</table>
+<table id="customers"></table>
                         
                     
                         </div>
@@ -108,8 +78,30 @@
                 <a href = "" class="btn btn-success">Sell</a>
             </form>
         </div>
-    </div> 
+    </div>
+    
+    <!--Modal Section Add Item-->
+    <div class = "additem-modal">
+      <div class = "modal-content">
+          <div class = "close">+</div>
+          <form action="" id="additemform">
+              <p>Product Name</p>
+              <input type = "text" placeholder = "Name">
+              <p>Quantity</p>
+              <input type = "text" placeholder = "0">
+              <p>Barcode/UPC #</p>
+              <input type = "text" placeholder = "Enter 12 Digit UPC #">
+              
+              <p>Carrie or Store Item</p>
+              <input type = "radio" id="carrie" name="location" value="Carrie">
+              <label for="carrie">Carrie</label><br>
+              <input type = "radio" id="store" name="location" value="Store">
+              <label for="store">Store</label><br>
 
+              <a href = "" class="btn btn-success" id="submit" value="Submit" name="submit">Submit</a>
+          </form>
+      </div>
+  </div> 
     <!-- Optional JavaScript -->
 
     <!-- Menu toggle script-->
@@ -133,15 +125,21 @@
             document.querySelector('.bg-modal').style.display = 'none';
         });
     </script>
-
-    <script src="bootstable.js"></script>
-    
+    <!--Add Item Pop Up Script-->
     <script>
-    //apply    
-    $("#table-list").SetEditable();
-    $('#add').click(function() {
-        rowAddNew('table-list', [1,2,3]);
-    });
+       document.getElementById('additem-button').addEventListener('click',
+        function() {
+            document.querySelector('.additem-modal').style.display = 'flex';
+        });
+
+        document.querySelector('.closeadditem').addEventListener('click', 
+        function() {
+            document.querySelector('.additem-modal').style.display = 'none';
+        });
+    </script>
+      
+  
+    <script>
     </script>
 
 
