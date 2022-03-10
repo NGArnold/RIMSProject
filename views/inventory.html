@@ -93,20 +93,36 @@
       <div class = "modal-content">
           <div class = "closeadditem">+</div>
           <form method="post" action="/inventory" id="additemform">
-              <p>Product Name</p>
-              <input type = "text" placeholder = "Name">
-              <p>Quantity</p>
-              <input type = "text" placeholder = "0">
-              <p>Barcode/UPC #</p>
-              <input type = "text" placeholder = "Enter 12 Digit UPC #">
+            <label for="productName">Product name</label>
+            <input class="form-control" id="productName" name="productName" type="text" />
               
-              <p>Carrie or Store Item</p>
-              <input type = "radio" id="carrie" name="location" value="Carrie">
-              <label for="carrie">Carrie</label><br>
-              <input type = "radio" id="store" name="location" value="Store">
-              <label for="store">Store</label><br>
+              <!--Assignment 3 placeholder
+              <label for="firstName">First Name:</label>
+              <input class="form-control" id="firstName" name="firstName" type="text" />
 
-              <a href = "" class="btn btn-success" id="submit" value="Submit" name="submit">Submit</a>
+
+              <label>Status:</label><br />
+                <label  class="checkbox-inline">
+                <input type="radio" id="statusFT" name="status" value="Full Time" /> Full Time                                
+                </label>
+                <label class="checkbox-inline">
+                <input type="radio" id="statusFT" name="status" value="Part Time" /> Part Time
+                </label>
+            -->
+
+            <label for="Quantity">Quantity</label>
+            <input class="form-control" id="Quantity" name="Quantity" type="text" />
+            <label for="productName">Barcode</label>
+            <input class="form-control" id="Barcode" name="Barcode" type="text" />
+              
+            <label>Carrie or Store Item</label><br />
+            <label>
+            <input type="radio" id="Location" name="Location" value="Carrie" /> Carrie                                
+            </label>
+            <label>
+            <input type="radio" id="Location" name="Location" value="Store" /> Store
+            </label>
+            <input type="submit" class="btn btn-success" value="Add Item" />
           </form>
       </div>
   </div> 
