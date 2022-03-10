@@ -89,3 +89,18 @@
     transform: rotate(45deg);
     cursor: pointer;
 }
+.closeadditem:hover {
+    color: #ddd;
+}
+
+#additem-button {
+    position:absolute;
+    top: 0;
+    right:15px;
+}
+
+#viewInventory-button {
+    position:absolute;
+    top: 0;
+    right: 500px;
+}

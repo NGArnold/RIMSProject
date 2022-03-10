@@ -1,0 +1,16 @@
+[
+    {
+      "productName": "Shampoo",
+      "Barcode": "86529193",
+      "Quantity": "20",
+      "Location": "Store"
+    },
+
+    {
+        "productName": "Conditioner",
+        "Barcode": "82329193",
+        "Quantity": "25",
+        "Location": "Carrie"
+      }
+
+]

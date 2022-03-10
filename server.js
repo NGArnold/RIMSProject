@@ -35,11 +35,11 @@ res.sendFile(path.join(__dirname,"/views/sales.html"));
 
 // route / get function calling the export module for employee data validation & parsing.
 
-app.get("/inventory", function(req,res){
+app.get("/viewinventory", function(req,res){
 
-  dataServ.getEmployees()
+  dataServ.getInventory()
         .then((data) => {
-          console.log("getEmployees...");
+          console.log("getInventory...");
           res.json(data);
         })
         .catch((error) => {
