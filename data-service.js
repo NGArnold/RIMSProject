@@ -30,7 +30,7 @@ module.exports.loadData = function (){
     return promise;
 };
 
-// getEmployees Function
+// getInventory Function
 
 module.exports.getInventory = function () {
     
@@ -46,3 +46,16 @@ module.exports.getInventory = function () {
 
     return this.promise;
 };
+
+// 
+module.exports.addItem = function(inventoryData) {
+
+    var promise = new Promise((resolve, reject) => {
+
+        inventory.push(inventoryData);
+
+        resolve (inventory);
+    })
+
+    return promise;
+}

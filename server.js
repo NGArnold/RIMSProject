@@ -1,6 +1,8 @@
-var path = require("path");
-var express = require("express");
-var app = express();
+const path = require("path");
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
 
 app.use(express.static('public/css'));
 
@@ -46,6 +48,16 @@ app.get("/viewinventory", function(req,res){
           console.log(error);
           res.json(error);
         })
+});
+
+// Inventory bodyparser and post
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.post("/inventory", function (req, res) {
+    dataServ.addItem(req.body)
+        .then(() => {
+            res.redirect("/viewinventory");
+        });
 });
 
 // route / get function calling the export module for manager data retrieval.
