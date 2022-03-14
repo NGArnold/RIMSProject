@@ -1,0 +1,74 @@
+<a href="#" class="btn btn-success" id="additem-button">Add Item</a>
+<a href="/viewinventory" class="btn btn-success" id="viewInventory-button">View Inventory</a>
+<h1>Inventory</h1>
+
+<table id="customers">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Occupation</th>
+        <th>Company</th>
+    </tr>
+    <tr>
+        <td>{{data.name}}</td>
+        <td>{{data.age}}</td>
+        <td>{{data.occupation}}</td>
+        <td>{{data.company}}</td>
+    </tr>
+
+
+    
+    <!--Modal Section Add Item-->
+    <div class="additem-modal">
+        <div class="modal-content">
+            <div class="closeadditem">+</div>
+            <form method="post" action="/inventory" id="additemform">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" name="productName" />
+
+                <!--Assignment 3 placeholder
+              <label for="firstName">First Name:</label>
+              <input class="form-control" id="firstName" name="firstName" type="text" />
+
+
+              <label>Status:</label><br />
+                <label  class="checkbox-inline">
+                <input type="radio" id="statusFT" name="status" value="Full Time" /> Full Time                                
+                </label>
+                <label class="checkbox-inline">
+                <input type="radio" id="statusFT" name="status" value="Part Time" /> Part Time
+                </label>
+            -->
+
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" />
+                <label for="productName">Barcode</label>
+                <input id="Barcode" name="Barcode" type="text" />
+
+                <label>Carrie or Store Item</label><br />
+                <label>
+                    <input type="radio" id="Location" name="Location" value="Carrie" /> Carrie
+                </label> <br>
+                <label>
+                    <input type="radio" id="Location" name="Location" value="Store" /> Store
+                </label> <br>
+                <input type="submit" class="btn btn-success" value="Add Item" />
+            </form>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+
+
+
+    <!--Add Item Pop Up Script-->
+    <script>
+        document.getElementById('additem-button').addEventListener('click',
+            function () {
+                document.querySelector('.additem-modal').style.display = 'flex';
+            });
+
+        document.querySelector('.closeadditem').addEventListener('click',
+            function () {
+                document.querySelector('.additem-modal').style.display = 'none';
+            });
+    </script>

@@ -1,13 +1,45 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+var dataServ = require("./data-service.js");
+const res = require("express/lib/response");
+const exphbs = require ("express-handlebars");
+
 
 const app = express();
 
+//setting handlebars
+app.engine('.hbs', exphbs.engine({ extname: '.hbs',
+                            defaultLayout: "main",
+                            helpers: {       
+                                      navLink: function(url, options){
+                                      return '<li' +
+                                     ((url == app.locals.activeRoute) ? ' class="active" ' : '') +
+                                     '><a href="' + url + '">' + options.fn(this) + '</a></li>';},
+
+                                     equal: function (lvalue, rvalue, options) {
+                                     if (arguments.length < 3)
+                                     throw new Error("Handlebars Helper equal needs 2 parameters");
+                                     if (lvalue != rvalue) {
+                                     return options.inverse(this);
+                                     } else {
+                                     return options.fn(this); }}  
+                  }
+}));
+app.set('view engine', '.hbs');
+
+//This will add the property "activeRoute" to "app.locals" whenever the route changes, ie: if our route is
+//"/employees/add", the app.locals.activeRoute value will be "/employees/add
+app.use(function(req,res,next){
+  let route = req.baseUrl + req.path;
+  app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
+  next();
+  });
+
+
 app.use(express.static('public/css'));
 
-var dataServ = require("./data-service.js");
-const res = require("express/lib/response");
+
 
 var HTTP_PORT = process.env.PORT || 8090;
 
@@ -17,22 +49,25 @@ function onHttpStart() {
 };
 
 /// setup a 'route' to listen on the default url path (http://localhost)
-app.get("/", function(req,res){
+app.get("/", function(req, res){
   res.sendFile(path.join(__dirname,"/views/login.html"));
 });
 
-app.get("/home", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/home.html"));
+app.get("/home", function(req, res){
+  //res.sendFile(path.join(__dirname,"/views/home.html"));
+  res.render("home");
 });
 
 // setup another route to listen on /inventory
 app.get("/inventory", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/inventory.html"));
+  //res.sendFile(path.join(__dirname,"/views/inventory.html"));
+  res.render("inventory");
 });
 
 // setup another route to listen on /sales
 app.get("/sales", function(req,res){
-res.sendFile(path.join(__dirname,"/views/sales.html"));
+//res.sendFile(path.join(__dirname,"/views/sales.html"));
+res.render("sales");
 });
 
 // route / get function calling the export module for employee data validation & parsing.
