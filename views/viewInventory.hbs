@@ -2,22 +2,27 @@
 <html>
     <head>
         <title>View Data</title>
-    </head>
 
+        <link rel="stylesheet" href="site.css">
+    </head>
     <body>
+        <tbody>
         <table id="customers">
             <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Occupation</th>
-                <th>Company</th>
+                <th>Product Name</th>
+                <th>Barcode</th>
+                <th>Quantity</th>
+                <th>Location</th>
             </tr>
+            {{#each viewinventory}} 
             <tr>
-                <td>{{data.name}}</td>
-                <td>{{data.age}}</td>
-                <td>{{data.occupation}}</td>
-                <td>{{data.company}}</td>
+                <td>{{productName}}</td>
+                <td>{{Barcode}}</td>
+                <td>{{Quantity}}</td>
+                <td>{{Location}}</td>
             </tr>
+            {{/each}}
         </table>
+        </tbody>
     </body>
 </html>

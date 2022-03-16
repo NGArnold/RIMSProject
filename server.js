@@ -8,32 +8,24 @@ const exphbs = require ("express-handlebars");
 
 const app = express();
 
-//setting handlebars
-app.engine('.hbs', exphbs.engine({ extname: '.hbs',
-                            defaultLayout: "main",
-                            helpers: {       
-                                      navLink: function(url, options){
-                                      return '<li' +
-                                     ((url == app.locals.activeRoute) ? ' class="active" ' : '') +
-                                     '><a href="' + url + '">' + options.fn(this) + '</a></li>';},
+// Register handlebars as the rendering engine for views
+app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
+app.set("view engine", ".hbs");
 
-                                     equal: function (lvalue, rvalue, options) {
-                                     if (arguments.length < 3)
-                                     throw new Error("Handlebars Helper equal needs 2 parameters");
-                                     if (lvalue != rvalue) {
-                                     return options.inverse(this);
-                                     } else {
-                                     return options.fn(this); }}  
-                  }
-}));
-app.set('view engine', '.hbs');
+//Render inventory data to table
+app.get("/viewInventory", function(req,res){
 
-//This will add the property "activeRoute" to "app.locals" whenever the route changes, ie: if our route is
-//"/employees/add", the app.locals.activeRoute value will be "/employees/add
-app.use(function(req,res,next){
-  let route = req.baseUrl + req.path;
-  app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
-  next();
+  dataServ.getInventory()
+    .then((data) => {
+     // console.log("getInventory JSON.");
+      res.render("viewinventory", {viewinventory: data, layout: false});
+      
+    })
+    .catch((err) => {
+     // console.log(err);
+     res.render({message: "no results"});
+    })
+
   });
 
 
@@ -48,32 +40,46 @@ function onHttpStart() {
   console.log("Express http server listening on Port: " + HTTP_PORT);
 };
 
+
+
+
 /// setup a 'route' to listen on the default url path (http://localhost)
 app.get("/", function(req, res){
   res.sendFile(path.join(__dirname,"/views/login.html"));
 });
 
 app.get("/home", function(req, res){
-  //res.sendFile(path.join(__dirname,"/views/home.html"));
-  res.render("home");
+  res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
 // setup another route to listen on /inventory
 app.get("/inventory", function(req,res){
-  //res.sendFile(path.join(__dirname,"/views/inventory.html"));
-  res.render("inventory");
+  res.sendFile(path.join(__dirname,"/views/inventory.html"));
 });
 
 // setup another route to listen on /sales
 app.get("/sales", function(req,res){
-//res.sendFile(path.join(__dirname,"/views/sales.html"));
-res.render("sales");
+res.sendFile(path.join(__dirname,"/views/sales.html"));
 });
+
+
 
 // route / get function calling the export module for employee data validation & parsing.
 
 app.get("/viewinventory", function(req,res){
 
+  if (req.query.productName) {
+    dataServ.getItemByProductName(req.query.productName)
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        res.json(err);
+      })
+  }
+
+  else  
+  {
   dataServ.getInventory()
         .then((data) => {
           console.log("getInventory...");
@@ -83,6 +89,7 @@ app.get("/viewinventory", function(req,res){
           console.log(error);
           res.json(error);
         })
+      }
 });
 
 // Inventory bodyparser and post
@@ -139,3 +146,5 @@ console.log("Data Loading...");
     .catch(error => {
         console.log(error);
     })
+
+  
