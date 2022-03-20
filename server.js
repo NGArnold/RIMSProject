@@ -54,7 +54,66 @@ app.get("/home", function(req, res){
 
 // setup another route to listen on /inventory
 app.get("/inventory", function(req,res){
-  res.sendFile(path.join(__dirname,"/views/inventory.html"));
+  
+  if (req.query.search) {
+    dataServ.getItemBySearch(req.query.search)
+        .then((data) => {
+          res.render("inventory", {viewinventory: data, layout: false});
+        })
+        .catch((err) => {
+          res.render("inventory", {message: "no results", layout: false});
+        })
+  }
+  else if (req.query.productName) {
+    dataServ.getItemByProductName(req.query.productName)
+      .then((data) => {
+        res.render("inventory", {viewinventory: data, layout: false});
+      })
+      .catch((err) => {
+        res.render("inventory", {message: "no results", layout: false});
+      })
+  }
+  else if (req.query.barcode) {
+    dataServ.getItemByBarcode(req.query.barcode)
+      .then((data) => {
+        res.render("inventory", {viewinventory: data, layout: false});
+      })
+      .catch((err) => {
+        res.render("inventory", {message: "no results", layout: false});
+      })
+  }
+ 
+  else if (req.query.quantity) {
+    dataServ.getItemByQuantity(req.query.quantity)
+        .then((data) => {
+          res.render("inventory", {viewinventory: data, layout: false});
+        })
+        .catch((err) => {
+          res.render("inventory", {message: "no results", layout: false});
+        })
+  }
+  else if (req.query.location) {
+    dataServ.getItemByLocation(req.query.location)
+        .then((data) => {
+          res.render("inventory", {viewinventory: data, layout: false});
+        })
+        .catch((err) => {
+          res.render("inventory", {message: "no results", layout: false});
+        })
+  }
+  else {
+    dataServ.getAllItems()
+        .then((data) => {
+         // console.log(data);
+          res.render("inventory", {viewinventory: data, layout: false});
+        })
+        .catch((err) => {
+          //console.log(err);
+          res.render({message: "no results"});
+        })
+  }
+  
+  
 });
 
 // setup another route to listen on /sales
@@ -66,31 +125,7 @@ res.sendFile(path.join(__dirname,"/views/sales.html"));
 
 // route / get function calling the export module for employee data validation & parsing.
 
-app.get("/viewinventory", function(req,res){
 
-  if (req.query.productName) {
-    dataServ.getItemByProductName(req.query.productName)
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((err) => {
-        res.json(err);
-      })
-  }
-
-  else  
-  {
-  dataServ.getInventory()
-        .then((data) => {
-          console.log("getInventory...");
-          res.json(data);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.json(error);
-        })
-      }
-});
 
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({extended: true}));
@@ -98,7 +133,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.post("/inventory", function (req, res) {
     dataServ.addItem(req.body)
         .then(() => {
-            res.redirect("/viewinventory");
+            res.redirect("/inventory");
         });
 });
 

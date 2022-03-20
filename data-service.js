@@ -30,22 +30,6 @@ module.exports.loadData = function (){
     return promise;
 };
 
-// getInventory Function
-
-module.exports.getInventory = function () {
-    
-    this.promise = new Promise((resolve,reject) => {
-
-        if(inventory.length === 0) {
-            var error = "No data found for employees...";
-            reject({message: error});
-        }
-
-        resolve (inventory);
-    })
-
-    return this.promise;
-};
 
 // 
 module.exports.addItem = function(inventoryData) {
@@ -61,181 +45,117 @@ module.exports.addItem = function(inventoryData) {
 }
 
 // setup function getItemByProductName
-module.exports.getItemByProductName = function (productName) {
-    var locEmp = [];
+module.exports.getItemByProductName = function (productNameID) {
+    var locItem = [];
     var promise = new Promise((resolve, reject) => {
 
-        for (var i = 0; i < employees.length; i++) {
-            if (viewinventory[i].productName == productName) {
-                locEmp.push(viewinventory[i]);
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].productName == productNameID) {
+                locItem.push(inventory[i]);
             }
         }
 
-        if (locEmp.length === 0) {
+        if (locItem.length === 0) {
             var err = "getItemByProductName() does not have any data.";
             reject({message: err});
         }
 
-    resolve (locEmp);
+    resolve (locItem);
     })
     return promise;
 };
 
-module.exports.getEmployeesByDepartment = function (departmentId) {
-    var locEmp = [];
+module.exports.getItemByBarcode = function (barcodeID) {
+    var locItem = [];
     var promise = new Promise((resolve, reject) => {
 
-        for (var i = 0; i < employees.length; i++) {
-            if (employees[i].department == departmentId) {
-                locEmp.push(employees[i]);
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].barcode == barcodeID) {
+                locItem.push(inventory[i]);
             }
         }
 
-        if (locEmp.length === 0) {
-            var err = "getEmployeesByDepartment() does not have any data.";
+        if (locItem.length === 0) {
+            var err = "getItemByBarcode() does not have any data.";
             reject({message: err});
         }
 
-    resolve (locEmp);
+    resolve (locItem);
     })
     return promise;
 };
 
-module.exports.getEmployeesByManager = function (managerBool) {
-    var locEmp = [];
-    var myTrue = managerBool == "true" ? true:false;
-
+module.exports.getItemByQuantity = function (quantityID) {
+    var locItem = [];
     var promise = new Promise((resolve, reject) => {
 
-        for (var i = 0; i < employees.length; i++) {
-            if (employees[i].isManager === myTrue) {
-                locEmp.push(employees[i]);
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].quantity == quantityID) {
+                locItem.push(inventory[i]);
             }
         }
 
-        if (locEmp.length === 0) {
-            var err = "getEmployeesByManager() does not have any data.";
+        if (locItem.length === 0) {
+            var err = "getItemByQuantity() does not have any data.";
             reject({message: err});
         }
 
-    resolve (locEmp);
+    resolve (locItem);
     })
     return promise;
 };
 
-module.exports.getEmployeesByManagerNum = function (managerID) {
-    var locEmp = [];
-
+module.exports.getItemByLocation = function (locationID) {
+    var locItem = [];
     var promise = new Promise((resolve, reject) => {
 
-        for (var i = 0; i < employees.length; i++) {
-            if (employees[i].employeeManagerNum == managerID) {
-                locEmp.push(employees[i]);
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].location == locationID) {
+                locItem.push(inventory[i]);
             }
         }
 
-        if (locEmp.length === 0) {
-            var err = "getEmployeesByManagerNum() does not have any data.";
+        if (locItem.length === 0) {
+            var err = "getItemByLocation() does not have any data.";
             reject({message: err});
         }
 
-    resolve (locEmp);
+    resolve (locItem);
     })
     return promise;
 };
 
-module.exports.addEmployee = function(employeeData) {
-
+module.exports.getAllItems = function() {
     var promise = new Promise((resolve, reject) => {
 
-        if (typeof employeeData.isManager === "undefined") {
-            employeeData.isManager = false;
-        } else {
-            employeeData.isManager = true;
-        }
-
-        employeeData.employeeNum = employees.length + 1;
-        employees.push(employeeData);
-
-        resolve (employees);
-    })
-
-    return promise;
-}
-
-module.exports.initialize = function() {
-    var promise = new Promise((resolve, reject) => {
-        try {
-            
-            fs.readFile('./data/employees.json', (err, data) => {
-                if (err) throw err;
-
-                employees = JSON.parse(data);
-                console.log("Initialize: load employees")
-            })
-            
-            fs.readFile('./data/departments.json', (err, data) => {
-                if (err) throw err;
-
-                departments = JSON.parse(data);
-                console.log("Initialize: load departments");
-            })
-
-        } catch (ex) {
-            console.log("Initialize: Failure");
-            reject("Initialize: Failure");
-        }
-        console.log("Initialize: Success");
-        resolve("Initialize: Success");
-    })
-    return promise;
-};
-
-module.exports.getAllEmployees = function() {
-    var promise = new Promise((resolve, reject) => {
-
-        if (employees.length === 0) {
-            var err = "No results returned in getAllEmployees";
+        if (inventory.length === 0) {
+            var err = "No results returned in getAllItems";
             reject({message: err});
         }
-        resolve (employees);
+        resolve (inventory);
     })
     return promise;
 };
 
-
-module.exports.getManagers = function() {
-    var managers = [];
+module.exports.getItemBySearch = function (searchID) {
+    var locItem = [];
     var promise = new Promise((resolve, reject) => {
 
-        for (var i = 0; i < employees.length; i++) {
-            if (employees[i].isManager == true) {
-                managers.push(employees[i]);
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].productName == searchID || inventory[i].barcode == searchID ||
+                 inventory[i].quantity == searchID || inventory[i].location == searchID) {
+                locItem.push(inventory[i]);
             }
         }
 
-        if (managers.length === 0) {
-            var err = "No results returned in getManagers()";
+        if (locItem.length === 0) {
+            var err = "getItemBySearch() does not have any data.";
             reject({message: err});
         }
 
-    resolve(managers);
+    resolve (locItem);
     })
-
     return promise;
 };
 
-module.exports.getDepartments = function() {
-
-    var promise = new Promise((resolve, reject) => {
-        if(departments.length === 0) {
-            var err = "No results returned in getDepartments()";
-            reject({message: err});
-        }
-    
-        resolve(departments);
-    })
-
-    return promise;
-}
 
