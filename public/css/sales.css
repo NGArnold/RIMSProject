@@ -1,36 +1,91 @@
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: grid;
+    justify-items: left;
+    align-items: left;
+    background-color: white;
+  }
+
+.menu-container{
+    width: auto;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
+
 /* Sales Container Styling */
 .button-container {
-    width: 400px;
-    background: lightgray;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    background: gray;
     overflow-y: auto;
+    border: solid;
+    padding: 5px;
 }
 
 /* Sales Button Styling */
 .button-container > a {
-    width: 100px;
-    height: 100px;
-    float: left;
-    background: white;   
-    margin: 15px;
-    text-align: center;
-    vertical-align: center;
+    width: auto;
+    align-content: center;
+    background: white;
+    outline:auto;
+    outline-color: black; 
+    margin: 16px;
 }
 
 /* Sales Table Styling */
 table, tr, th, td {
 
-    border: solid;
-    padding: 5px;
-    width: auto;
-    height: auto;
-}
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+    tr:nth-child(even){background-color: #f2f2f2;}
+  
+    tr:hover {background-color: #ddd;}
+  
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
 
 /* Sales h1 Styling */
 h1 {
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+
 }
 
-/* Sales Footer Styling */
+/* Sales h1 Styling */
+h4 {
+
+    padding-bottom: 0;
+    padding-top: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+
+}
+
+/*Footer Styling */
 .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     text-align: right;
+    padding-right: 5px;
+    font-family: Arial, Helvetica, sans-serif;
 }
