@@ -42,3 +42,61 @@
     transform: rotate(45deg);
     cursor: pointer;
 }
+
+
+/*Add Item button CSS*/
+.additem-modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.modal-content {
+    width: 500px;
+    height: 450px;
+    background-color: #2C3E50;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.modal-content form input[type=text] {
+    width: 50%;
+    display: block;
+    margin: 15px auto;
+}
+
+.modal-content form p, label{
+    color: #ddd;
+}
+
+.closeadditem {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+.closeadditem:hover {
+    color: #ddd;
+}
+
+#additem-button {
+    position:absolute;
+    top: 0;
+    right:15px;
+}
+
+#viewInventory-button {
+    position:absolute;
+    top: 0;
+    right: 500px;
+}

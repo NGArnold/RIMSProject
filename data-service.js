@@ -1,9 +1,8 @@
 const fs = require("fs");
 const { resolve } = require("path");
 
-var employees = [];
-var managers = [];
-var departments = [];
+var inventory = [];
+
 
 // Load data into GLOBAL arrays...
 
@@ -13,17 +12,10 @@ module.exports.loadData = function (){
 
         try {
 
-            fs.readFile('./data/employees.json', (error, data) => {
+            fs.readFile('./data/viewinventory.json', (error, data) => {
                 if (error) throw error;
 
-                employees = JSON.parse(data);
-
-            })
-
-            fs.readFile('./data/departments.json', (error,data) => {
-                if (error) throw error;
-
-                departments = JSON.parse(data);
+                inventory = JSON.parse(data);
 
             })
                 
@@ -38,61 +30,132 @@ module.exports.loadData = function (){
     return promise;
 };
 
-// getEmployees Function
 
-module.exports.getEmployees = function () {
-    
-    this.promise = new Promise((resolve,reject) => {
+// 
+module.exports.addItem = function(inventoryData) {
 
-        if(employees.length === 0) {
-            var error = "No data found for employees...";
-            reject({message: error});
-        }
+    var promise = new Promise((resolve, reject) => {
 
-        resolve (employees);
+        inventory.push(inventoryData);
+
+        resolve (inventory);
     })
 
-    return this.promise;
-};
+    return promise;
+}
 
-// getManagers Function
+// setup function getItemByProductName
+module.exports.getItemByProductName = function (productNameID) {
+    var locItem = [];
+    var promise = new Promise((resolve, reject) => {
 
-module.exports.getManagers = function () {
-    
-    this.promise = new Promise((resolve,reject) => {
-
-        for(var i=0; i < employees.length; i++){
-            
-            if (employees[i].isManager == true) {
-           managers.push(employees[i]);
-        }
-    }
-
-    if (managers.length === 0) {
-
-        this.error = "No data found for managers...";
-        reject({message: this.error});
-    }
-
-        resolve (managers);
-    })
-
-    return this.promise;
-};
-
-// getDepartments Function
-
-module.exports.getDepartments = function () {
-    
-    this.promise = new Promise((resolve,reject) => {
-
-        if(departments.length === 0) {
-            this.error = "No data found for departments...";
-            reject({message: this.error});
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].productName == productNameID) {
+                locItem.push(inventory[i]);
+            }
         }
 
-        resolve (departments);
-    })
+        if (locItem.length === 0) {
+            var err = "getItemByProductName() does not have any data.";
+            reject({message: err});
+        }
 
-    return this.promise;
+    resolve (locItem);
+    })
+    return promise;
 };
+
+module.exports.getItemByBarcode = function (barcodeID) {
+    var locItem = [];
+    var promise = new Promise((resolve, reject) => {
+
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].barcode == barcodeID) {
+                locItem.push(inventory[i]);
+            }
+        }
+
+        if (locItem.length === 0) {
+            var err = "getItemByBarcode() does not have any data.";
+            reject({message: err});
+        }
+
+    resolve (locItem);
+    })
+    return promise;
+};
+
+module.exports.getItemByQuantity = function (quantityID) {
+    var locItem = [];
+    var promise = new Promise((resolve, reject) => {
+
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].quantity == quantityID) {
+                locItem.push(inventory[i]);
+            }
+        }
+
+        if (locItem.length === 0) {
+            var err = "getItemByQuantity() does not have any data.";
+            reject({message: err});
+        }
+
+    resolve (locItem);
+    })
+    return promise;
+};
+
+module.exports.getItemByLocation = function (locationID) {
+    var locItem = [];
+    var promise = new Promise((resolve, reject) => {
+
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].location == locationID) {
+                locItem.push(inventory[i]);
+            }
+        }
+
+        if (locItem.length === 0) {
+            var err = "getItemByLocation() does not have any data.";
+            reject({message: err});
+        }
+
+    resolve (locItem);
+    })
+    return promise;
+};
+
+module.exports.getAllItems = function() {
+    var promise = new Promise((resolve, reject) => {
+
+        if (inventory.length === 0) {
+            var err = "No results returned in getAllItems";
+            reject({message: err});
+        }
+        resolve (inventory);
+    })
+    return promise;
+};
+
+module.exports.getItemBySearch = function (searchID) {
+    var locItem = [];
+    var promise = new Promise((resolve, reject) => {
+
+        for (var i = 0; i < inventory.length; i++) {
+            if (inventory[i].productName == searchID || inventory[i].barcode == searchID ||
+                 inventory[i].quantity == searchID || inventory[i].location == searchID) {
+                locItem.push(inventory[i]);
+            }
+        }
+
+        if (locItem.length === 0) {
+            var err = "getItemBySearch() does not have any data.";
+            reject({message: err});
+        }
+
+    resolve (locItem);
+    })
+    return promise;
+};
+
+
