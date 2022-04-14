@@ -4,36 +4,25 @@ const bodyParser = require("body-parser");
 var dataServ = require("./data-service.js");
 const res = require("express/lib/response");
 const exphbs = require ("express-handlebars");
-
+const mongoose = require ("mongoose");
 
 const app = express();
+
+
+const HTTP_PORT = process.env.PORT || 8090;
+
+app.listen(HTTP_PORT, function () {
+    console.log('Node.js listening on port ' + HTTP_PORT);
+});
+
 
 // Register handlebars as the rendering engine for views
 app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
-//Render inventory data to table
-app.get("/viewInventory", function(req,res){
-
-  dataServ.getInventory()
-    .then((data) => {
-     // console.log("getInventory JSON.");
-      res.render("viewinventory", {viewinventory: data, layout: false});
-      
-    })
-    .catch((err) => {
-     // console.log(err);
-     res.render({message: "no results"});
-    })
-
-  });
-
 
 app.use(express.static('public/css'));
 
-
-
-var HTTP_PORT = process.env.PORT || 8090;
 
 // call this function after the http server starts listening for requests
 function onHttpStart() {
@@ -58,54 +47,75 @@ app.get("/inventory", function(req,res){
   if (req.query.search) {
     dataServ.getItemBySearch(req.query.search)
         .then((data) => {
-          res.render("inventory", {viewinventory: data, layout: false});
+          res.render("inventory", {items: data, layout: false});
         })
         .catch((err) => {
           res.render("inventory", {message: "no results", layout: false});
         })
   }
-  else if (req.query.productName) {
-    dataServ.getItemByProductName(req.query.productName)
+  else if (req.query.Product) {
+    dataServ.getItemByProductName(req.query.Product)
       .then((data) => {
-        res.render("inventory", {viewinventory: data, layout: false});
+        console.log(data);
+        res.render("inventory", {items: data, layout: false});
       })
       .catch((err) => {
         res.render("inventory", {message: "no results", layout: false});
       })
   }
-  else if (req.query.barcode) {
-    dataServ.getItemByBarcode(req.query.barcode)
+  else if (req.query.Barcode) {
+    dataServ.getItemByBarcode(req.query.Barcode)
       .then((data) => {
-        res.render("inventory", {viewinventory: data, layout: false});
+        res.render("inventory", {items: data, layout: false});
       })
       .catch((err) => {
         res.render("inventory", {message: "no results", layout: false});
       })
   }
  
-  else if (req.query.quantity) {
-    dataServ.getItemByQuantity(req.query.quantity)
+  else if (req.query.Quantity) {
+    dataServ.getItemByQuantity(req.query.Quantity)
         .then((data) => {
-          res.render("inventory", {viewinventory: data, layout: false});
+          res.render("inventory", {items: data, layout: false});
         })
         .catch((err) => {
           res.render("inventory", {message: "no results", layout: false});
         })
   }
-  else if (req.query.location) {
-    dataServ.getItemByLocation(req.query.location)
+  else if (req.query.Location) {
+    dataServ.getItemByLocation(req.query.Location)
         .then((data) => {
-          res.render("inventory", {viewinventory: data, layout: false});
+          res.render("inventory", {items: data, layout: false});
         })
         .catch((err) => {
           res.render("inventory", {message: "no results", layout: false});
         })
   }
+  else if (req.query.Brand) {
+    dataServ.getItemByBrand(req.query.Brand)
+        .then((data) => {
+          res.render("inventory", {items: data, layout: false});
+        })
+        .catch((err) => {
+          res.render("inventory", {message: "no results", layout: false});
+        })
+  }
+  else if (req.query.Size) {
+    dataServ.getItemBySize(req.query.Size)
+        .then((data) => {
+          res.render("inventory", {items: data, layout: false});
+        })
+        .catch((err) => {
+          res.render("inventory", {message: "no results", layout: false});
+        })
+  }
+
+
   else {
     dataServ.getAllItems()
         .then((data) => {
          // console.log(data);
-          res.render("inventory", {viewinventory: data, layout: false});
+          res.render("inventory", {items: data, layout: false});
         })
         .catch((err) => {
           //console.log(err);
@@ -130,6 +140,13 @@ res.sendFile(path.join(__dirname,"/views/sales.html"));
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({extended: true}));
 
+
+app.post("/inventory", (req, res) => {
+  dataServ.increaseQuantity(req.body).then(() => {
+      res.redirect("/inventory");
+  });
+});
+
 app.post("/inventory", function (req, res) {
     dataServ.addItem(req.body)
         .then(() => {
@@ -137,49 +154,10 @@ app.post("/inventory", function (req, res) {
         });
 });
 
-// route / get function calling the export module for manager data retrieval.
-
-app.get("/managers", function(req,res){
-
-  dataServ.getManagers()
-        .then((data) => {
-          console.log("getManagers...");
-          res.json(data);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.json(error);
-        })
-});
-
-// route / get function calling the export module for department data retrieval.
-
-app.get("/departments", function(req,res){
-
-  dataServ.getDepartments()
-        .then((data) => {
-          console.log("getDepartments...");
-          console.log("Complete.")
-          res.json(data);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.json(error);
-        })
-});
 
 app.get(function(req,res){
   res.status(404).send("Status: 404 - Page cannot be found! <br /><a href ='/'>Home</a>?");
 });
 
-// call loadData function & setup http server to listen on HTTP_PORT
-console.log("Data Loading...");
-  dataServ.loadData()
-    .then(() => {
-      app.listen(HTTP_PORT, onHttpStart);
-    })
-    .catch(error => {
-        console.log(error);
-    })
 
   

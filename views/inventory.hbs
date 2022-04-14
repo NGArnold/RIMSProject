@@ -74,20 +74,27 @@
                             <table class="table" id="customers">
                                 <thead>
                                     <tr>
+                                        <th>Brand</th>
                                         <th>Product Name</th>
                                         <th>Barcode</th>
                                         <th>Quantity</th>
+                                        <th>Size</th>
                                         <th>Location</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {{#each viewinventory}}
+                                    {{#each items}}
                                     <tr>
-                                        <td><a href="/inventory?productName={{productName}}">{{productName}}</a></td>
-                                        <td><a href="/inventory?barcode={{barcode}}">{{barcode}}</a></td>
-                                        <td><a href="/inventory?quantity={{quantity}}">{{quantity}}</a></td>
-                                        <td><a href="/inventory?location={{location}}">{{location}}</a></td>
+                                        <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
+                                        <td><a href="/inventory?Product={{Product}}">{{Product}}</a></td>
+                                        <td><a href="/inventory?Barcode={{Barcode}}">{{Barcode}}</a></td>
+                                        <td><a href="/inventory?Quantity={{Quantity}}">{{Quantity}}</a></td>
+                                        <td><a href="/inventory?Size={{Size}}">{{Size}}</a></td>
+                                        <td><a href="/inventory?Location={{Location}}">{{Location}}</a></td>
+                                        <td><button type="button" class="btn btn-success" id="increase-button" name="increase-button"><i class="fas fa-plus    "></i></button>
+                                        <button type="button" class="btn btn-danger" id="decrease-button" name="decrease-button"><i class="fas fa-minus   "></i></button>
+                                        </td>
                                     </tr>
 
 
@@ -142,19 +149,23 @@
         <div class="modal-content">
             <div class="closeadditem">+</div>
             <form method="post" action="/inventory" id="additemform">
-                <label for="productName">Product Name</label>
-                <input type="text" id="productName" name="productName" placeholder="Name" />
+                <label for="Brand">Brand</label>
+                <input type="text" id="Brand" name="Brand" placeholder="Name" />
+                <label for="Product">Product Name</label>
+                <input type="text" id="Product" name="Product" placeholder="Name" />
                 <label for="Quantity">Quantity</label>
-                <input type="text" id="quantity" name="quantity" placeholder="0" />
-                <label for="productName">Barcode/UPC #</label>
-                <input id="barcode" name="barcode" type="text" placeholder="Enter 12 Digit UPC #" />
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Size">Size</label>
+                <input type="text" id="Size" name="Size" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-                <label>Carrie or Store Item</label><br />
+                <label>Carrie or Salon Item</label><br />
                 <label>
-                    <input type="radio" id="location" name="location" value="Carrie" /> Carrie
+                    <input type="radio" id="Location" name="Location" value="Carrie" /> Carrie
                 </label> <br>
                 <label>
-                    <input type="radio" id="location" name="location" value="Store" /> Store
+                    <input type="radio" id="Location" name="Location" value="Salon" /> Salon
                 </label> <br>
                 <input type="submit" class="btn btn-success" value="Add Item" />
             </form>
