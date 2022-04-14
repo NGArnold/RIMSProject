@@ -41,6 +41,8 @@ app.get("/home", function(req, res){
   res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
+
+
 // setup another route to listen on /inventory
 app.get("/inventory", function(req,res){
   
@@ -131,7 +133,21 @@ app.get("/sales", function(req,res){
 res.sendFile(path.join(__dirname,"/views/sales.html"));
 });
 
+app.get("/inventory/increase/:increaseID", (req, res) => {
+  dataServ.increaseQuantity(req.params.increaseID).then((data) => {
+      res.redirect("/inventory");
+  }).catch((err) => {
+      res.status(500).send("Unable to increase quantity/quantity not found");
+  });
+});
 
+app.get("/inventory/decrease/:decreaseID", (req, res) => {
+  dataServ.decreaseQuantity(req.params.decreaseID).then((data) => {
+      res.redirect("/inventory");
+  }).catch((err) => {
+      res.status(500).send("Unable to decrease quantity/quantity not found");
+  });
+});
 
 // route / get function calling the export module for employee data validation & parsing.
 
@@ -139,13 +155,6 @@ res.sendFile(path.join(__dirname,"/views/sales.html"));
 
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({extended: true}));
-
-
-app.post("/inventory", (req, res) => {
-  dataServ.increaseQuantity(req.body).then(() => {
-      res.redirect("/inventory");
-  });
-});
 
 app.post("/inventory", function (req, res) {
     dataServ.addItem(req.body)

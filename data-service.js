@@ -159,9 +159,10 @@ module.exports.getAllItems = function() {
 
 
 module.exports.increaseQuantity = function (increaseID) {
+
     return new Promise((resolve, reject) => {
         
-        Item.updateOne({}, { $set: { Barcode: increaseID }, $inc: { Quantity: 1 }})
+        Item.findOneAndUpdate({Barcode: increaseID}, {$inc: { Quantity: 1 }})
         .then(() => {
             resolve();
 
@@ -176,7 +177,7 @@ module.exports.increaseQuantity = function (increaseID) {
 module.exports.decreaseQuantity = function (decreaseID) {
     return new Promise((resolve, reject) => {
         
-        Item.updateOne({}, { $set: { Barcode: decreaseID }, $inc: { Quantity: -1 }})
+        Item.findOneAndUpdate({Barcode: decreaseID}, {$inc: { Quantity: -1 }})
         .then(() => {
             resolve();
 
