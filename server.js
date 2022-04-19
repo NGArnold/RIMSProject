@@ -133,9 +133,13 @@ app.get("/sales", function(req,res){
     res.render("sales", {layout: false});
 });
 
+app.get("/inventory/increase", (req,res) => {
+  res.redirect("/inventory");
+})
+
 app.get("/inventory/increase/:increaseID", (req, res) => {
   dataServ.increaseQuantity(req.params.increaseID).then((data) => {
-      res.redirect("/inventory");
+      res.redirect("/inventory");    
   }).catch((err) => {
       res.status(500).send("Unable to increase quantity/quantity not found");
   });
@@ -157,9 +161,6 @@ app.get("/inventory/delete/:deleteID", (req, res) => {
   });
 });
 
-// route / get function calling the export module for employee data validation & parsing.
-
-
 
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({extended: true}));
@@ -174,6 +175,11 @@ app.post("/inventory", function (req, res) {
 app.post("/inventory/sell", function (req, res) {
   
   dataServ.sellItem(req.body)
+      .then(() => {
+          res.redirect("/inventory");
+      });
+
+      dataServ.topSelling(req.body)
       .then(() => {
           res.redirect("/inventory");
       });
