@@ -20,8 +20,17 @@ const itemSchema = new Schema({
     Barcode: Number
 });
 
+const topSellingSchema = new Schema({
+    Brand: String,
+    Product: String, 
+    Size: String, 
+    Quantity: Number,  
+    LatestSold: String
+});
+
 const User = mongoose.model('User', userSchema);
 const Item = mongoose.model('Item', itemSchema); 
+const TopSelling = mongoose.model('TopSelling', topSellingSchema);
 
 itemSchema.index(
     {
@@ -187,6 +196,58 @@ module.exports.decreaseQuantity = function (decreaseID) {
         
     });
 }
+
+module.exports.deleteItem = function (deleteID) {
+    return new Promise((resolve, reject) => {
+
+        Item.deleteOne({ Barcode: deleteID }).exec()
+        .then(() => {
+            resolve();
+
+        }).catch((error) => {
+            reject("Unable to delete item.");
+        });
+    });
+};
+
+module.exports.sellItem = function (sellData) {
+
+    var values = Object.values(sellData);
+
+    locQuantity = parseInt(values[0]);
+    locBarcode = parseInt(values[1]);
+
+    return new Promise((resolve, reject) => {
+        
+        Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Quantity: -locQuantity }})
+        .then(() => {
+            resolve();
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
+    });
+}
+
+module.exports.topSelling = function(saleData) {
+
+    return new Promise(function (resolve, reject) {
+
+        for (const prop in saleData) {
+            if (saleData[prop] == "") {
+                saleData[prop] = null;
+            }
+        }
+            TopSelling.create(saleData)
+            .then(() => {
+                resolve();
+            }).catch((error) => {
+                reject("Unable to create sale data.");
+            });
+    });
+    
+};
 
 module.exports.getItemBySearch = function (searchID) {
     return new Promise((resolve, reject) => {

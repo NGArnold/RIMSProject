@@ -13,6 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
 
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -56,12 +57,12 @@
                                 <form id="searchForm">
                                     <div class="input-group mb-3">
                                         <input type="text" placeholder="Search.." name="search" id="search-field">
-                                    
-                                            <button type="search" class="btn btn-secondary btn-sm"><i
-                                                    class="fa fa-search fa-fw"></i></button>
-                                            <a href="/inventory" class="btn btn-secondary btn-sm"><i
-                                                    class="fa fa-refresh" aria-hidden="true"></i></a>
-                                        
+
+                                        <button type="search" class="btn btn-secondary btn-sm"><i
+                                                class="fa fa-search fa-fw"></i></button>
+                                        <a href="/inventory" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"
+                                                aria-hidden="true"></i></a>
+
                                     </div>
                                 </form>
                             </div>
@@ -74,6 +75,7 @@
                             <table class="table" id="customers">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Brand</th>
                                         <th>Product Name</th>
                                         <th>Barcode</th>
@@ -86,6 +88,9 @@
                                 <tbody>
                                     {{#each items}}
                                     <tr>
+                                        <td><a href="/inventory/increase/{{Barcode}}" class="btn btn-secondary"
+                                                style="color: white;"><i class="fas fa-edit    "></i></a></td>
+
                                         <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
                                         <td><a href="/inventory?Product={{Product}}">{{Product}}</a></td>
                                         <td><a href="/inventory?Barcode={{Barcode}}">{{Barcode}}</a></td>
@@ -93,8 +98,12 @@
                                         <td><a href="/inventory?Size={{Size}}">{{Size}}</a></td>
                                         <td><a href="/inventory?Location={{Location}}">{{Location}}</a></td>
                                         <td>
-                                            <a href="/inventory/increase/{{Barcode}}" class="btn btn-success" style="color: white;"><i class="fas fa-plus    "></i></a>
-                                            <a href="/inventory/decrease/{{Barcode}}" class="btn btn-danger" style="color: white;"><i class="fas fa-minus    "></i></a>
+                                            <a href="/inventory/increase/{{Barcode}}" class="btn btn-success"
+                                                style="color: white;"><i class="fas fa-plus    "></i></a>
+                                            <a href="/inventory/decrease/{{Barcode}}" class="btn btn-danger"
+                                                style="color: white;"><i class="fas fa-minus    "></i></a>
+                                            <a href="/inventory/delete/{{Barcode}}" class="btn btn-secondary"
+                                                style="color: white;"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
 
@@ -126,28 +135,20 @@
     <div class="bg-modal">
         <div class="modal-content">
             <div class="close">+</div>
-            <form action="">
-                <p>Product Name</p>
-                <input type="text" placeholder="Name">
-                <p>Quantity</p>
-                <input type="text" placeholder="0">
-                <p>Barcode/UPC #</p>
-                <input type="text" placeholder="Enter 12 Digit UPC #">
+            <form method="post" action="/inventory/sell" id="sellitemform">
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-                <p>Carrie or Store Item</p>
-                <input type="radio" id="carrie" name="location" value="Carrie">
-                <label for="carrie">Carrie</label><br>
-                <input type="radio" id="store" name="location" value="Store">
-                <label for="store">Store</label><br>
-
-                <a href="" class="btn btn-success">Sell</a>
+                <input type="submit" class="btn btn-success" value="Sell" />
             </form>
         </div>
     </div>
 
     <!--Modal Section Add Item-->
     <div class="additem-modal">
-        <div class="modal-content">
+        <div class="additem-modal-content">
             <div class="closeadditem">+</div>
             <form method="post" action="/inventory" id="additemform">
                 <label for="Brand">Brand</label>
@@ -161,9 +162,9 @@
                 <label for="Barcode">Barcode/UPC #</label>
                 <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-                <label>Carrie or Salon Item</label><br />
+                <label>Personal or Salon Item</label><br />
                 <label>
-                    <input type="radio" id="Location" name="Location" value="Carrie" /> Carrie
+                    <input type="radio" id="Location" name="Location" value="Carrie" /> Personal
                 </label> <br>
                 <label>
                     <input type="radio" id="Location" name="Location" value="Salon" /> Salon
@@ -208,6 +209,10 @@
                 document.querySelector('.additem-modal').style.display = 'none';
             });
     </script>
+
+    {{!-- Edit Buttons Script --}}
+
+    
 
 
 

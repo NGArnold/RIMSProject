@@ -130,7 +130,7 @@ app.get("/inventory", function(req,res){
 
 // setup another route to listen on /sales
 app.get("/sales", function(req,res){
-res.sendFile(path.join(__dirname,"/views/sales.html"));
+    res.render("sales", {layout: false});
 });
 
 app.get("/inventory/increase/:increaseID", (req, res) => {
@@ -149,6 +149,14 @@ app.get("/inventory/decrease/:decreaseID", (req, res) => {
   });
 });
 
+app.get("/inventory/delete/:deleteID", (req, res) => {
+  dataServ.deleteItem(req.params.deleteID).then((data) => {
+      res.redirect("/inventory");
+  }).catch((err) => {
+      res.status(500).send("Unable to delete quantity/quantity not found");
+  });
+});
+
 // route / get function calling the export module for employee data validation & parsing.
 
 
@@ -163,6 +171,13 @@ app.post("/inventory", function (req, res) {
         });
 });
 
+app.post("/inventory/sell", function (req, res) {
+  
+  dataServ.sellItem(req.body)
+      .then(() => {
+          res.redirect("/inventory");
+      });
+});
 
 app.get(function(req,res){
   res.status(404).send("Status: 404 - Page cannot be found! <br /><a href ='/'>Home</a>?");
