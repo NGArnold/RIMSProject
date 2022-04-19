@@ -19,25 +19,35 @@ body {
 /* Sales Container Styling */
 .button-container {
     width: 75%;
+    margin-bottom: auto;
+    margin-top: auto;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     background: gray;
     overflow-y: auto;
     border: solid;
+    border-style: ridge;
+    border-color: black;
     padding: 5px;
 }
 
 /* Sales Button Styling */
 .button-container > a {
+    padding: 5px;
     width: auto;
+    height: auto;
     align-content: center;
-    background: lightgray;
     outline:auto;
     outline-color: black; 
-    margin: 16px;
 }
 
+.button {
+  color:green;
+  padding: 5px;
+  border: ridge;
+  border-color: black;
+}
 
 /* Sales Table Styling */
 table, tr, th, td {

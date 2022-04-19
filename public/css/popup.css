@@ -12,7 +12,7 @@
 
 .modal-content {
     width: 500px;
-    height: 450px;
+    height: 270px;
     background-color: #2C3E50;
     border-radius: 4px;
     text-align: center;
@@ -57,9 +57,9 @@
     display: none;
 }
 
-.modal-content {
+.additem-modal-content {
     width: 500px;
-    height: 450px;
+    height: 650px;
     background-color: #2C3E50;
     border-radius: 4px;
     text-align: center;
@@ -67,13 +67,13 @@
     position: relative;
 }
 
-.modal-content form input[type=text] {
+.additem-modal-content form input[type=text] {
     width: 50%;
     display: block;
     margin: 15px auto;
 }
 
-.modal-content form p, label{
+.additem-modal-content form p, label{
     color: #ddd;
 }
 
@@ -95,8 +95,3 @@
     right:15px;
 }
 
-#viewInventory-button {
-    position:absolute;
-    top: 0;
-    right: 500px;
-}

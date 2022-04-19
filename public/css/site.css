@@ -12,7 +12,20 @@
   #customers tr:nth-child(even){background-color: #f2f2f2;}
   
   #customers tr:hover {background-color: #ddd;}
+
+  #customers td:nth-child(1) {
+    background-color: white;
+    border: none;
+  }
+  #customers td:nth-child(8) {
+    background-color: white;
+    border: none;
+  }
   
+  #customers th:nth-child(1) {
+    background-color: white;
+    border: none;
+  }
   #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -31,6 +44,10 @@
     top: 500px;
     width: 100%;
     justify-content: center;
+  }
+
+  h1 {
+    padding-left: 100px;
   }
 
 

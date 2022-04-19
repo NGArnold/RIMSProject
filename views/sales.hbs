@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<script src="https://localhost:49506/8ee4ea609a6346c4cf34c2b621ac79ba.js"></script>
+
+  <title>Sales</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+    integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+  <!-- Our Styling-->
+  <link rel="stylesheet" href="sidebar.css">
+  <link rel="stylesheet" href="sales.css">
+  <link rel="stylesheet" href="popup.css">
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li><a href="/home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+        <li><a href="/inventory"><i class="fas fa-boxes    "></i> Inventory</a></li>
+        <li><a href="/sales">&nbsp;<i class="fa fa-usd" aria-hidden="true"></i>&nbsp;&nbsp;Sales</a></li>
+        <li><button type="button" class="btn btn-success" id="sell-button">Sell</button></li>
+      </ul>
+    </div>
+
+    <!-- Page Content-->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <a href="#" class="btn btn-success" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+          </br>
+            <div class="menu-container">
+            <div class="button-container">
+            <h1>Sales Activity</h1>
+            <a href="#/Action1" class="btn btn-success">Top Selling</a>
+            <a href="#/Action2" class="btn btn-success">Latest Sales</a>
+            <a href="#/Action3" class="btn btn-success">Not Selling Well</a>
+          </div>
+          </div>
+          
+          <div class="table-container">
+            <h4>Product Details</h4>
+          <div class="top-selling">
+            <table>
+            <tr>
+              
+              <th>Product</th>
+              <th>Brand</th>
+              <th>Quantity</th>
+              <th>Size</th>
+              <th>Last Sold</th>
+              <th>Purchase Price</th>
+              <th>Sell Price</th>
+            </tr>
+            <tr>
+              <td>Hairspray</td>
+              <td>Redken</td>
+              <td>9</td>
+              <td>12 oz.</td>
+              <td>2/3/2022</td>
+              <td>$17.00</td>
+              <td>$25.00</td>
+            </tr>
+            <tr>
+              <td>Curling Iron</td>
+              <td>Hot Tools</td>
+              <td>5</td>
+              <td>2 in.</td>
+              <td>2/1/2022</td>
+              <td>$32.00</td>
+              <td>$45.00</td>
+            </tr>
+          </table>
+          </div>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          </div>
+          <div class="footer">
+            <p>RIMS 2022 &copy;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  <!-- Modal Section -->
+  <div class="bg-modal">
+    <div class="modal-content">
+      <div class="close">+</div>
+      <form action="">
+        <p>Product Name</p>
+        <input type="text" placeholder="Name">
+        <p>Quantity</p>
+        <input type="text" placeholder="0">
+        <p>Barcode/UPC #</p>
+        <input type="text" placeholder="Enter 12 Digit UPC #">
+
+        <p>Carrie or Store Item</p>
+        <input type="radio" id="carrie" name="location" value="Carrie">
+        <label for="carrie">Carrie</label><br>
+        <input type="radio" id="store" name="location" value="Store">
+        <label for="store">Store</label><br>
+
+        <a href="" class="btn btn-success">Sell</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+
+  <!-- Menu toggle script-->
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("menuDisplayed");
+    });
+  </script>
+
+  <!-- Sell Pop Up Script -->
+  <script>
+    document.getElementById('sell-button').addEventListener('click',
+      function () {
+        document.querySelector('.bg-modal').style.display = 'flex';
+      });
+
+    document.querySelector('.close').addEventListener('click',
+      function () {
+        document.querySelector('.bg-modal').style.display = 'none';
+      });
+  </script>
+
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
