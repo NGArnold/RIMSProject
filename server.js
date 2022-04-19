@@ -178,11 +178,6 @@ app.post("/inventory/sell", function (req, res) {
       .then(() => {
           res.redirect("/inventory");
       });
-
-      dataServ.topSelling(req.body)
-      .then(() => {
-          res.redirect("/inventory");
-      });
 });
 
 app.get(function(req,res){
