@@ -13,6 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
 
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -51,20 +52,20 @@
                         <a href="#" class="btn btn-success" id="additem-button">Add Item</a>
 
 
-<div class="d-flex justify-content-center align-items-center container ">
-    <div class="row">
-                        <form id="searchForm">
-                            <div class="input-group mb-3">
-                                <input type="text" placeholder="Search.." name="search" id="search-field">
-                                <div class="input-group-append">
-                                <button type="search" class="btn btn-secondary btn-sm"><i
-                                        class="fa fa-search fa-fw"></i></button>
-                                <a href="/inventory" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"
-                                        aria-hidden="true"></i></a>
-                                        </div>
+                        <div class="d-flex justify-content-center align-items-center container ">
+                            <div class="row">
+                                <form id="searchForm">
+                                    <div class="input-group mb-3">
+                                        <input type="text" placeholder="Search.." name="search" id="search-field">
+
+                                        <button type="search" class="btn btn-secondary btn-sm"><i
+                                                class="fa fa-search fa-fw"></i></button>
+                                        <a href="/inventory" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"
+                                                aria-hidden="true"></i></a>
+
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                        </div>
                         </div>
 
                         <h1>Inventory</h1>
@@ -74,20 +75,36 @@
                             <table class="table" id="customers">
                                 <thead>
                                     <tr>
+                                        <th></th>
+                                        <th>Brand</th>
                                         <th>Product Name</th>
                                         <th>Barcode</th>
                                         <th>Quantity</th>
+                                        <th>Size</th>
                                         <th>Location</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {{#each viewinventory}}
+                                    {{#each items}}
                                     <tr>
-                                        <td><a href="/inventory?productName={{productName}}">{{productName}}</a></td>
-                                        <td><a href="/inventory?barcode={{barcode}}">{{barcode}}</a></td>
-                                        <td><a href="/inventory?quantity={{quantity}}">{{quantity}}</a></td>
-                                        <td><a href="/inventory?location={{location}}">{{location}}</a></td>
+                                        <td><a href="/inventory/increase/{{Barcode}}" class="btn btn-secondary"
+                                                style="color: white;"><i class="fas fa-edit    "></i></a></td>
+
+                                        <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
+                                        <td><a href="/inventory?Product={{Product}}">{{Product}}</a></td>
+                                        <td><a href="/inventory?Barcode={{Barcode}}">{{Barcode}}</a></td>
+                                        <td><a href="/inventory?Quantity={{Quantity}}">{{Quantity}}</a></td>
+                                        <td><a href="/inventory?Size={{Size}}">{{Size}}</a></td>
+                                        <td><a href="/inventory?Location={{Location}}">{{Location}}</a></td>
+                                        <td>
+                                            <a href="/inventory/increase/{{Barcode}}" class="btn btn-success"
+                                                style="color: white;"><i class="fas fa-plus    "></i></a>
+                                            <a href="/inventory/decrease/{{Barcode}}" class="btn btn-danger"
+                                                style="color: white;"><i class="fas fa-minus    "></i></a>
+                                            <a href="/inventory/delete/{{Barcode}}" class="btn btn-secondary"
+                                                style="color: white;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
                                     </tr>
 
 
@@ -118,43 +135,39 @@
     <div class="bg-modal">
         <div class="modal-content">
             <div class="close">+</div>
-            <form action="">
-                <p>Product Name</p>
-                <input type="text" placeholder="Name">
-                <p>Quantity</p>
-                <input type="text" placeholder="0">
-                <p>Barcode/UPC #</p>
-                <input type="text" placeholder="Enter 12 Digit UPC #">
+            <form method="post" action="/inventory/sell" id="sellitemform">
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-                <p>Carrie or Store Item</p>
-                <input type="radio" id="carrie" name="location" value="Carrie">
-                <label for="carrie">Carrie</label><br>
-                <input type="radio" id="store" name="location" value="Store">
-                <label for="store">Store</label><br>
-
-                <a href="" class="btn btn-success">Sell</a>
+                <input type="submit" class="btn btn-success" value="Sell" />
             </form>
         </div>
     </div>
 
     <!--Modal Section Add Item-->
     <div class="additem-modal">
-        <div class="modal-content">
+        <div class="additem-modal-content">
             <div class="closeadditem">+</div>
             <form method="post" action="/inventory" id="additemform">
-                <label for="productName">Product Name</label>
-                <input type="text" id="productName" name="productName" placeholder="Name" />
+                <label for="Brand">Brand</label>
+                <input type="text" id="Brand" name="Brand" placeholder="Name" />
+                <label for="Product">Product Name</label>
+                <input type="text" id="Product" name="Product" placeholder="Name" />
                 <label for="Quantity">Quantity</label>
-                <input type="text" id="quantity" name="quantity" placeholder="0" />
-                <label for="productName">Barcode/UPC #</label>
-                <input id="barcode" name="barcode" type="text" placeholder="Enter 12 Digit UPC #" />
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Size">Size</label>
+                <input type="text" id="Size" name="Size" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-                <label>Carrie or Store Item</label><br />
+                <label>Personal or Salon Item</label><br />
                 <label>
-                    <input type="radio" id="location" name="location" value="Carrie" /> Carrie
+                    <input type="radio" id="Location" name="Location" value="Carrie" /> Personal
                 </label> <br>
                 <label>
-                    <input type="radio" id="location" name="location" value="Store" /> Store
+                    <input type="radio" id="Location" name="Location" value="Salon" /> Salon
                 </label> <br>
                 <input type="submit" class="btn btn-success" value="Add Item" />
             </form>
@@ -197,10 +210,10 @@
             });
     </script>
 
+    {{!-- Edit Buttons Script --}}
 
+    
 
-    <script>
-    </script>
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
