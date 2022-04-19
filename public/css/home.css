@@ -1,13 +1,15 @@
 body {
-    background-color: #FAF0E6;
+    background-color:#21313C;
   }
 
 hr.new1 {
-    border-top: 2px solid black;
+    border-top: 2px solid white;
 }
 
 h2.headerhome {
+    color: rgb(255, 255, 255);
     text-align: center;
+
 }
 div.a {
     height: 54px;
@@ -81,10 +83,17 @@ body,
     font-size: 24px
 }
 
-.rightside {
+.righttop {
     height: 550px;
     position: absolute;
     right: 350px;
-    top: 150px;
+    top: 100px;
     width: 500px;
+}
+.lefttop {
+    height: 300px;
+    position: absolute;
+    left: 50px;
+    top: 100px;
+    width: 300px;
 }

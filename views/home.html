@@ -24,14 +24,6 @@
 
     <!-- New CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Pie Chart -->
-    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
-
-    <!-- Donut Chart -->
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
-    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
 </head>
 
 <body>
@@ -63,61 +55,34 @@
                         <hr class="new1">
 
                         <div class="a">
-                            <p>All Items</p>
+
                         </div>
 
+                        <!--PLACEHOLDER-->
                         <div class="b">
-                            <p>Low Stock Items</p>
                         </div>
+
+                        <!--PLACEHOLDER-->
                         <div class="number-1">
-                            <p>30</p>
                         </div>
 
+                        <!--PLACEHOLDER-->
                         <div class="number-2">
-                            <p>3</p>
                         </div>
 
-                        <div class="rightbottom">
-                            
+                        <div class="lefttop">
+                            <iframe
+                                style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                                width="320" height="240"
+                                src="https://charts.mongodb.com/charts-revive-inventory-manageme-adhov/embed/charts?id=62576568-b272-4fd1-8be5-d0223f7b0f20&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"></iframe>
                         </div>
 
-                        <div class="rightside">
-                            <!-- Pie Chart -->
-                            <div id="container" class="chartobj"></div>
-                            <script>
-                                anychart.onDocumentReady(function () {
-
-                                    // set the data
-                                    var data = [
-                                        { x: "All Items", value: 30, fill: "#4682B4", exploded: true },
-                                        { x: "Low Stock", value: 3, fill: "#DC143C"}];
-                                    
-                                    // create the chart and set the data
-                                    var chart = anychart.pie(data);
-
-                                    // set the chart title
-                                    var title = chart.title();
-                                    chart.title("Product Details");
-                                    chart.background({fill: "#FAF0E6 1"});
-                                    title.align("center");
-                                    title.fontSize(18);
-
-                                    // add the data
-                                    chart.data(data);
-
-                                    // sort elements
-                                    chart.sort("desc");
-
-                                    // set legend position
-                                    chart.legend().position("right");
-                                    // set items layout
-                                    chart.legend().itemsLayout("vertical");
-
-                                    // display the chart in the container
-                                    chart.container('container');
-                                    chart.draw();
-                                });
-                            </script>
+                        <div class="righttop">
+                            <!--MongoDB Chart-->
+                            <iframe
+                                style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                                width="800" height="600"
+                                src="https://charts.mongodb.com/charts-revive-inventory-manageme-adhov/embed/charts?id=62575b8d-342b-4af2-841c-dfcb02be2d33&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"></iframe>
                         </div>
                     </div>
                 </div>
