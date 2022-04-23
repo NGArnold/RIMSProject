@@ -6,6 +6,7 @@ const res = require("express/lib/response");
 const exphbs = require ("express-handlebars");
 const mongoose = require ("mongoose");
 const clientSessions = require("client-sessions");
+const { redirect } = require("express/lib/response");
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
 
-app.use(express.static('public/css'));
+app.use(express.static('public/css/'));
+app.use(express.static('public/images/'));
 
 
 // call this function after the http server starts listening for requests
@@ -65,7 +67,7 @@ app.post("/login", (req, res) => {
 
   if(username === "" || password === "") {
     // Render 'missing credentials'
-    return res.render("login", { errorMsg: "Missing credentials.", layout: false });
+    return res.render("login", { errorMsg: "Username and Password required.", layout: false });
   }
 
   // use sample "user" (declared above)
@@ -74,7 +76,6 @@ app.post("/login", (req, res) => {
     // Add the user on the session and redirect them to the dashboard page.
     req.session.user = {
       username: user.username,
-      email: user.email
     };
 
     res.redirect("/home");
