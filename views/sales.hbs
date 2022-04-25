@@ -56,51 +56,52 @@
           </div>
           </div>
           
-          <div class="table-container">
+          
             <h4>Product Details</h4>
-          <div class="top-selling">
-            <table>
-            <tr>
-              
-              <th>Product</th>
-              <th>Brand</th>
-              <th>Quantity</th>
-              <th>Size</th>
-              <th>Last Sold</th>
-              <th>Purchase Price</th>
-              <th>Sell Price</th>
-            </tr>
-            <tr>
-              <td>Hairspray</td>
-              <td>Redken</td>
-              <td>9</td>
-              <td>12 oz.</td>
-              <td>2/3/2022</td>
-              <td>$17.00</td>
-              <td>$25.00</td>
-            </tr>
-            <tr>
-              <td>Curling Iron</td>
-              <td>Hot Tools</td>
-              <td>5</td>
-              <td>2 in.</td>
-              <td>2/1/2022</td>
-              <td>$32.00</td>
-              <td>$45.00</td>
-            </tr>
-          </table>
-          </div>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
-          </div>
+          
+
+                            <table class="table" id="customers">
+                                <thead>
+                                    <tr>                                       
+                                        <th>Brand</th>
+                                        <th>Product Name</th>
+                                        <th>Size</th>
+                                        <th>Sold</th>
+                                        <th>Latest Sold</th>                                                                             
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {{#each items}}
+                                    <tr>                                      
+                                        <td>{{Brand}}</td>
+                                        <td>{{Product}}</td>
+                                        <td>{{Size}}</td>
+                                        <td>{{Sold}}</td>
+                                        <td>{{LatestSold}}</td>                                                                          
+                                    </tr>
+
+
+                                    {{else}}
+                                    <!--<div class="col-md-12 text-center">-->
+                                    <strong>No Items Available</strong>
+                                    <!--</div>-->
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#unless items}}
+        <div class="col-md-12 text-center">
+            <strong>{{message}}</strong>
+        </div>
+        {{/unless}}
+    </div>
           <div class="footer">
             <p>RIMS 2022 &copy;</p>
           </div>
@@ -112,26 +113,18 @@
   
   <!-- Modal Section -->
   <div class="bg-modal">
-    <div class="modal-content">
-      <div class="close">+</div>
-      <form action="">
-        <p>Product Name</p>
-        <input type="text" placeholder="Name">
-        <p>Quantity</p>
-        <input type="text" placeholder="0">
-        <p>Barcode/UPC #</p>
-        <input type="text" placeholder="Enter 12 Digit UPC #">
+        <div class="modal-content">
+            <div class="close">+</div>
+            <form method="post" action="/sales/sell" id="sellitemform">
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
 
-        <p>Carrie or Store Item</p>
-        <input type="radio" id="carrie" name="location" value="Carrie">
-        <label for="carrie">Carrie</label><br>
-        <input type="radio" id="store" name="location" value="Store">
-        <label for="store">Store</label><br>
-
-        <a href="" class="btn btn-success">Sell</a>
-      </form>
+                <input type="submit" class="btn btn-success" value="Sell" />
+            </form>
+        </div>
     </div>
-  </div>
 
   <!-- Optional JavaScript -->
 

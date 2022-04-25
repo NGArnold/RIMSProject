@@ -130,7 +130,15 @@ app.get("/inventory", function(req,res){
 
 // setup another route to listen on /sales
 app.get("/sales", function(req,res){
-    res.render("sales", {layout: false});
+  dataServ.getAllSoldItems()
+  .then((data) => {
+   // console.log(data);
+    res.render("sales", {items: data, layout: false});
+  })
+  .catch((err) => {
+    //console.log(err);
+    res.render({message: "no results"});
+  })
 });
 
 app.get("/inventory/increase", (req,res) => {
@@ -176,7 +184,21 @@ app.post("/inventory/sell", function (req, res) {
   
   dataServ.sellItem(req.body)
       .then(() => {
-          res.redirect("/inventory");
+        dataServ.topSelling(req.body)
+        .then(() => {
+            res.redirect("/inventory");
+        });   
+      });
+});
+
+app.post("/sales/sell", function (req, res) {
+  
+  dataServ.sellItem(req.body)
+      .then(() => {
+        dataServ.topSelling(req.body)
+        .then(() => {
+            res.redirect("/sales");
+        });   
       });
 });
 

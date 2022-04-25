@@ -17,20 +17,13 @@ const itemSchema = new Schema({
     Size: String, 
     Quantity: Number, 
     Location: String, 
-    Barcode: Number
-});
-
-const topSellingSchema = new Schema({
-    Brand: String,
-    Product: String, 
-    Size: String, 
-    Quantity: Number,  
+    Barcode: Number,
+    Sold: { type: Number, default: 0 },
     LatestSold: String
 });
 
 const User = mongoose.model('User', userSchema);
 const Item = mongoose.model('Item', itemSchema); 
-const TopSelling = mongoose.model('TopSelling', topSellingSchema);
 
 itemSchema.index(
     {
@@ -166,6 +159,20 @@ module.exports.getAllItems = function() {
     });
 }
 
+module.exports.getAllSoldItems = function() {
+    
+    return new Promise((resolve, reject) => {
+
+        Item.find({}).sort({Sold: 'desc'}).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
+    });
+}
 
 module.exports.increaseQuantity = function (increaseID) {
 
@@ -230,21 +237,31 @@ module.exports.sellItem = function (sellData) {
     });
 }
 
-module.exports.topSelling = function(saleData) {
+module.exports.topSelling = function(sellData) {
+
+    var values = Object.values(sellData);
+
+    locQuantity = parseInt(values[0]);
+    locBarcode = parseInt(values[1]);
+
+    const d = new Date();
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    var date = month + "/" + day + "/" + year;
+
+    
 
     return new Promise(function (resolve, reject) {
+        console.log(date);
+        Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
+        .then(() => {
+            resolve();
 
-        for (const prop in saleData) {
-            if (saleData[prop] == "") {
-                saleData[prop] = null;
-            }
-        }
-            TopSelling.create(saleData)
-            .then(() => {
-                resolve();
-            }).catch((error) => {
-                reject("Unable to create sale data.");
-            });
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
     });
     
 };
