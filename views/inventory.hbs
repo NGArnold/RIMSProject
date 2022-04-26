@@ -88,7 +88,7 @@
                                 <tbody>
                                     {{#each items}}
                                     <tr>
-                                        <td><a href="/inventory/increase/{{Barcode}}" class="btn btn-secondary"
+                                        <td><a href="#" class="btn btn-secondary" id="editButton{{Barcode}}"
                                                 style="color: white;"><i class="fas fa-edit    "></i></a></td>
 
                                         <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
@@ -150,7 +150,7 @@
     <div class="additem-modal">
         <div class="additem-modal-content">
             <div class="closeadditem">+</div>
-            <form method="post" action="/inventory" id="additemform">
+            <form method="post" action="/inventory/add" id="additemform">
                 <label for="Brand">Brand</label>
                 <input type="text" id="Brand" name="Brand" placeholder="Name" />
                 <label for="Product">Product Name</label>
@@ -173,6 +173,39 @@
             </form>
         </div>
     </div>
+   
+   
+    <!-- edit button modal -->
+    <div class="editItem-modal">
+        <div class="editItem-modal-content">
+            <div class="closeEditItem">+</div>
+            <form method="post" action="/inventory/edit" id="edititemform">
+            {{#each items}}
+                <label for="Brand">Brand</label>
+                <input type="text" value="{{Barcode}}" id="Brand" name="Brand" placeholder="Name" />
+                <label for="Product">Product Name</label>
+                <input type="text" id="Product" name="Product" placeholder="Name" />
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Size">Size</label>
+                <input type="text" id="Size" name="Size" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
+
+                <label>Personal or Salon Item</label><br />
+                <label>
+                    <input type="radio" id="Location" name="Location" value="Carrie" /> Personal
+                </label> <br>
+                <label>
+                    <input type="radio" id="Location" name="Location" value="Salon" /> Salon
+                </label> <br>
+                <input type="submit" class="btn btn-success" value="Edit Item" />
+            {{/each}}
+            </form>
+        </div>
+    </div>
+
+
     <!-- Optional JavaScript -->
 
     <!-- Menu toggle script-->
@@ -211,9 +244,17 @@
     </script>
 
     {{!-- Edit Buttons Script --}}
+     <script>
+        document.getElementById('editButton').addEventListener('click',
+            function () {
+                document.querySelector('.editItem-modal').style.display = 'flex';
+            });
 
-    
-
+        document.querySelector('.closeEditItem').addEventListener('click',
+            function () {
+                document.querySelector('.editItem-modal').style.display = 'none';
+            });
+    </script>
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

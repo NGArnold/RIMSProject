@@ -221,8 +221,8 @@ module.exports.sellItem = function (sellData) {
 
     var values = Object.values(sellData);
 
-    locQuantity = parseInt(values[0]);
-    locBarcode = parseInt(values[1]);
+    var locQuantity = parseInt(values[0]);
+    var locBarcode = parseInt(values[1]);
 
     return new Promise((resolve, reject) => {
         
@@ -235,7 +235,7 @@ module.exports.sellItem = function (sellData) {
         });
         
     });
-}
+};
 
 module.exports.topSelling = function(sellData) {
 
@@ -279,4 +279,29 @@ module.exports.getItemBySearch = function (searchID) {
     });
 };
 
+module.exports.editItem = function (editData) {
 
+
+    return new Promise((resolve, reject) => {
+        for (const prop in editData) {
+            if (editData[prop] == "") {
+                editData[prop] = null;
+            }
+        } 
+        Item.updateOne({Barcode: editData.Barcode},
+            {Brand: editData.Brand, 
+            Product: editData.Product,
+            Size: editData.Size,
+            Quantity: editData.Quantity, 
+            Location: editData.Location,
+            Barcode: editData.Barcode}   
+            )
+        .then(() => {
+            resolve();
+
+        }).catch((error) => {
+            reject("Unable to update item.");
+        });
+        
+    });
+};

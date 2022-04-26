@@ -173,7 +173,7 @@ app.get("/inventory/delete/:deleteID", (req, res) => {
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post("/inventory", function (req, res) {
+app.post("/inventory/add", function (req, res) {
     dataServ.addItem(req.body)
         .then(() => {
             res.redirect("/inventory");
@@ -200,8 +200,17 @@ app.post("/sales/sell", function (req, res) {
             res.redirect("/sales");
         });   
       });
+      
 });
 
+app.post("/inventory/edit", function (req, res) {
+  
+  dataServ.editItem(req.body)
+      .then(() => {
+            res.redirect("/inventory");
+        });   
+      });
+      
 app.get(function(req,res){
   res.status(404).send("Status: 404 - Page cannot be found! <br /><a href ='/'>Home</a>?");
 });
