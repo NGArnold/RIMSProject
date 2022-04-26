@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 const mongoose =require ("mongoose");
+const { stat } = require("fs");
 var Schema = mongoose.Schema;
 // connect to your MongoDB Atlas Database
 mongoose.connect("mongodb+srv://user1:admin@rims.ssq4p.mongodb.net/RIMS?retryWrites=true&w=majority");
@@ -159,11 +160,17 @@ module.exports.getAllItems = function() {
     });
 }
 
-module.exports.getAllSoldItems = function() {
+module.exports.getItemsByStatistics = function(statID) {
     
+    var organization = "desc";
+
+    if (statID == "notSellingWell") {
+        organization = "asc";
+    }
+
     return new Promise((resolve, reject) => {
 
-        Item.find({}).sort({Sold: 'desc'}).lean().exec()
+        Item.find({}).sort({Sold: organization}).lean().exec()
         .then((data) => {
             resolve(data);
 
@@ -173,6 +180,22 @@ module.exports.getAllSoldItems = function() {
         
     });
 }
+
+module.exports.getAllSoldItems = function(statID) {
+
+    return new Promise((resolve, reject) => {
+
+        Item.find({}).sort({Sold: "desc"}).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
+    });
+}
+
 
 module.exports.increaseQuantity = function (increaseID) {
 
@@ -237,12 +260,12 @@ module.exports.sellItem = function (sellData) {
     });
 };
 
-module.exports.topSelling = function(sellData) {
+module.exports.salesStats = function(sellData) {
 
     var values = Object.values(sellData);
 
-    locQuantity = parseInt(values[0]);
-    locBarcode = parseInt(values[1]);
+    var locQuantity = parseInt(values[0]);
+    var locBarcode = parseInt(values[1]);
 
     const d = new Date();
     var day = d.getDate();

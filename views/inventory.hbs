@@ -88,7 +88,7 @@
                                 <tbody>
                                     {{#each items}}
                                     <tr>
-                                        <td><a href="#" class="btn btn-secondary" id="editButton{{Barcode}}"
+                                        <td><a href="#" class="btn btn-secondary" id="editButton"
                                                 style="color: white;"><i class="fas fa-edit    "></i></a></td>
 
                                         <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
@@ -243,6 +243,7 @@
             });
     </script>
 
+    
     {{!-- Edit Buttons Script --}}
      <script>
         document.getElementById('editButton').addEventListener('click',
