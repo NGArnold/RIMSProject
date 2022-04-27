@@ -1,9 +1,23 @@
+table thead tr{
+  display:block;
+}
+
+table th,table td{
+  width:800px;
+}
+
+table  tbody{
+display:block;
+height:800px;
+overflow:auto;
+}
+
 #customers {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
-  
+
   #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
