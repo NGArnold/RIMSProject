@@ -24,7 +24,7 @@ body {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    background: gray;
+    background: lightgray;
     overflow-y: auto;
     border: solid;
     border-style: ridge;
@@ -50,16 +50,17 @@ body {
 }
 
 /* Sales Table Styling */
-table, tr, th, td {
+table, tr, td {
 
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: auto;
   }
   
   td, th {
     border: 1px solid #ddd;
     padding: 8px;
+    width: auto;
   }
   
     tr:nth-child(even){background-color: #f2f2f2;}
