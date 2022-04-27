@@ -62,10 +62,8 @@ module.exports.addItem = function(inventoryData) {
 // setup function getItemByProductName
 module.exports.getItemByProductName = function (productNameID) {
     return new Promise((resolve, reject) => {
-        console.log(productNameID);
         Item.find({ Product: productNameID }).lean().exec()
         .then((data) => {
-            console.log(data);
             resolve(data);
 
         }).catch((error) => {
@@ -276,7 +274,6 @@ module.exports.salesStats = function(sellData) {
     
 
     return new Promise(function (resolve, reject) {
-        console.log(date);
         Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
         .then(() => {
             resolve();
@@ -311,7 +308,7 @@ module.exports.editItem = function (editData) {
                 editData[prop] = null;
             }
         } 
-        Item.updateOne({Barcode: editData.Barcode},
+        Item.findOneAndUpdate({Barcode: editData.Barcode},
             {Brand: editData.Brand, 
             Product: editData.Product,
             Size: editData.Size,

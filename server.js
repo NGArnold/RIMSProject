@@ -58,7 +58,6 @@ app.get("/inventory", function (req, res) {
   else if (req.query.Product) {
     dataServ.getItemByProductName(req.query.Product)
       .then((data) => {
-        console.log(data);
         res.render("inventory", { items: data, layout: false });
       })
       .catch((err) => {
@@ -116,12 +115,10 @@ app.get("/inventory", function (req, res) {
   else {
     dataServ.getAllItems()
       .then((data) => {
-        // console.log(data);
         res.render("inventory", { items: data, layout: false });
       })
       .catch((err) => {
-        //console.log(err);
-        res.render({ message: "no results" });
+        res.render({ message: "no results", layout: false });
       })
   }
 
@@ -133,28 +130,22 @@ app.get("/sales", function (req, res) {
   if (req.query.Stat) {
     dataServ.getItemsByStatistics(req.query.Stat)
       .then((data) => {
-        // console.log(data);
         res.render("sales", { items: data, layout: false });
       })
       .catch((err) => {
-        //console.log(err);
-        res.render({ message: "no results" });
+        res.render({ message: "no results", layout: false });
       })
   } else {
     dataServ.getAllSoldItems()
       .then((data) => {
-        // console.log(data);
         res.render("sales", { items: data, layout: false });
       })
       .catch((err) => {
-        //console.log(err);
-        res.render({ message: "no results" });
+        res.render({ message: "no results", layout: false });
       })
   }
 
 });
-
-
 
 app.get("/inventory/increase", (req, res) => {
   res.redirect("/inventory");
@@ -184,14 +175,40 @@ app.get("/inventory/delete/:deleteID", (req, res) => {
   });
 });
 
+app.get("/editItem/:Barcode", (req, res) => {
+  
+  dataServ.getItemByBarcode(req.params.Barcode).then((data) => {
+      res.render("editItem", { item: data, layout: false });
+  }).catch((err) => {
+      res.render("editItem", { message: "no results", layout: false });
+  });
+});
+
 
 // Inventory bodyparser and post
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/editItem/update", (req, res) => {
+  dataServ.editItem(req.body).then(() => {
+      res.redirect("/inventory");
+  });
+});
 
 app.post("/inventory/add", function (req, res) {
   dataServ.addItem(req.body)
     .then(() => {
       res.redirect("/inventory");
+    });
+});
+
+app.post("/home/sell", function (req, res) {
+
+  dataServ.sellItem(req.body)
+    .then(() => {
+      dataServ.salesStats(req.body)
+        .then(() => {
+          res.redirect("/home");
+        });
     });
 });
 
@@ -218,13 +235,6 @@ app.post("/sales/sell", function (req, res) {
 
 });
 
-app.post("/inventory/edit", function (req, res) {
-
-  dataServ.editItem(req.body)
-    .then(() => {
-      res.redirect("/inventory");
-    });
-});
 
 app.get(function (req, res) {
   res.status(404).send("Status: 404 - Page cannot be found! <br /><a href ='/'>Home</a>?");

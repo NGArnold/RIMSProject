@@ -21,10 +21,10 @@
         integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
     <!-- Our Styling-->
-    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="/sidebar.css">
 
-    <link rel="stylesheet" href="popup.css">
-    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="/popup.css">
+    <link rel="stylesheet" href="/site.css">
 
 
 </head>
@@ -88,7 +88,7 @@
                                 <tbody>
                                     {{#each items}}
                                     <tr>
-                                        <td><a href="#" class="btn btn-secondary" id="editButton"
+                                        <td><a href="/editItem/{{Barcode}}" class="btn btn-secondary" id="editButton"
                                                 style="color: white;"><i class="fas fa-edit    "></i></a></td>
 
                                         <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
@@ -132,6 +132,7 @@
 
     <!-- Modal Section -->
 
+    <!--Sell Item Modal-->
     <div class="bg-modal">
         <div class="modal-content">
             <div class="close">+</div>
@@ -139,14 +140,14 @@
                 <label for="Quantity">Quantity</label>
                 <input type="text" id="Quantity" name="Quantity" placeholder="0" />
                 <label for="Barcode">Barcode/UPC #</label>
-                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter UPC #" />
 
                 <input type="submit" class="btn btn-success" value="Sell" />
             </form>
         </div>
     </div>
 
-    <!--Modal Section Add Item-->
+    <!--Add Item Modal-->
     <div class="additem-modal">
         <div class="additem-modal-content">
             <div class="closeadditem">+</div>
@@ -160,11 +161,11 @@
                 <label for="Size">Size</label>
                 <input type="text" id="Size" name="Size" placeholder="0" />
                 <label for="Barcode">Barcode/UPC #</label>
-                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter UPC #" />
 
                 <label>Personal or Salon Item</label><br />
                 <label>
-                    <input type="radio" id="Location" name="Location" value="Carrie" /> Personal
+                    <input type="radio" id="Location" name="Location" value="Personal" /> Personal
                 </label> <br>
                 <label>
                     <input type="radio" id="Location" name="Location" value="Salon" /> Salon
@@ -173,40 +174,6 @@
             </form>
         </div>
     </div>
-   
-   
-    <!-- edit button modal -->
-    <div class="editItem-modal">
-        <div class="editItem-modal-content">
-            <div class="closeEditItem">+</div>
-            <form method="post" action="/inventory/edit" id="edititemform">
-            {{#each items}}
-                <label for="Brand">Brand</label>
-                <input type="text" value="{{Barcode}}" id="Brand" name="Brand" placeholder="Name" />
-                <label for="Product">Product Name</label>
-                <input type="text" id="Product" name="Product" placeholder="Name" />
-                <label for="Quantity">Quantity</label>
-                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
-                <label for="Size">Size</label>
-                <input type="text" id="Size" name="Size" placeholder="0" />
-                <label for="Barcode">Barcode/UPC #</label>
-                <input id="Barcode" name="Barcode" type="text" placeholder="Enter 12 Digit UPC #" />
-
-                <label>Personal or Salon Item</label><br />
-                <label>
-                    <input type="radio" id="Location" name="Location" value="Carrie" /> Personal
-                </label> <br>
-                <label>
-                    <input type="radio" id="Location" name="Location" value="Salon" /> Salon
-                </label> <br>
-                <input type="submit" class="btn btn-success" value="Edit Item" />
-            {{/each}}
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Optional JavaScript -->
 
     <!-- Menu toggle script-->
     <script>
@@ -240,20 +207,6 @@
         document.querySelector('.closeadditem').addEventListener('click',
             function () {
                 document.querySelector('.additem-modal').style.display = 'none';
-            });
-    </script>
-
-    
-    {{!-- Edit Buttons Script --}}
-     <script>
-        document.getElementById('editButton').addEventListener('click',
-            function () {
-                document.querySelector('.editItem-modal').style.display = 'flex';
-            });
-
-        document.querySelector('.closeEditItem').addEventListener('click',
-            function () {
-                document.querySelector('.editItem-modal').style.display = 'none';
             });
     </script>
 
