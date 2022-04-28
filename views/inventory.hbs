@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+    
 
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -56,7 +56,7 @@
                             <div class="row">
                                 <form id="searchForm">
                                     <div class="input-group mb-3">
-                                        <input type="text" placeholder="Search.." name="search" id="search-field">
+                                        <input type="text" placeholder="Search..." name="search" id="search-field">
 
                                         <button type="search" class="btn btn-secondary btn-sm"><i
                                                 class="fa fa-search fa-fw"></i></button>
@@ -82,13 +82,14 @@
                                         <th>Quantity</th>
                                         <th>Size</th>
                                         <th>Location</th>
+                                        
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     {{#each items}}
                                     <tr>
-                                        <td><a href="/editItem/{{Barcode}}" class="btn btn-secondary" id="editButton"
+                                        <td><a href="/editItem/{{_id}}" class="btn btn-secondary" id="editButton"
                                                 style="color: white;"><i class="fas fa-edit    "></i></a></td>
 
                                         <td><a href="/inventory?Brand={{Brand}}">{{Brand}}</a></td>
@@ -98,13 +99,18 @@
                                         <td><a href="/inventory?Size={{Size}}">{{Size}}</a></td>
                                         <td><a href="/inventory?Location={{Location}}">{{Location}}</a></td>
                                         <td>
-                                            <a href="/inventory/increase/{{Barcode}}" class="btn btn-success"
-                                                style="color: white;"><i class="fas fa-plus    "></i></a>
-                                            <a href="/inventory/decrease/{{Barcode}}" class="btn btn-danger"
-                                                style="color: white;"><i class="fas fa-minus    "></i></a>
-                                            <a href="/inventory/delete/{{Barcode}}" class="btn btn-secondary"
-                                                style="color: white;"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            <a href="/inventory/increase/{{_id}}" class="btn btn-success"
+                                                style="color: white;" id="increaseID"><i class="fas fa-plus    "></i></a>
+                                            {{#if Quantity}}
+                                                <a href="/inventory/decrease/{{_id}}" class="btn btn-danger"
+                                                style="color: white;" id="decreaseID"><i class="fas fa-minus    "></i></a>
+                                            {{/if}}
+                                            
+                                            <a href="/inventory/delete/{{_id}}" class="btn btn-secondary"
+                                                style="color: white;"onclick="return confirm('Are you sure you want to delete this item?')">
+                                                <i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
+                                        <input type="hidden" name="passBarcode" id="passBarcode" value="{{Barcode}}" />
                                     </tr>
 
 
@@ -147,6 +153,16 @@
         </div>
     </div>
 
+    <!--Delete Item Modal-->
+    <div class="bg-modal">
+        <div class="modal-content">
+            <div class="close">+</div>
+            <form method="post" action="/inventory/sell" id="sellitemform">
+                <input type="submit" class="btn btn-success" value="Sell" />
+            </form>
+        </div>
+    </div>
+
     <!--Add Item Modal-->
     <div class="additem-modal">
         <div class="additem-modal-content">
@@ -170,7 +186,8 @@
                 <label>
                     <input type="radio" id="Location" name="Location" value="Salon" /> Salon
                 </label> <br>
-                <input type="submit" class="btn btn-success" value="Add Item" />
+                <input type="submit" class="btn btn-success" value="Add Item" id="addItem" />
+                
             </form>
         </div>
     </div>
@@ -210,6 +227,31 @@
             });
     </script>
 
+    <script id = "handlebarsDemo" type = "text/x-handlebars-template">
+        $('#increaseID').click(function (event) {
+            
+            event.preventDefault();
+
+            $.ajax({
+                global: false,
+                type: 'POST',
+                url: /inventory/increase/,
+                dataType: 'html',
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (request, status, error) {
+                    serviceError();
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+
+
+    </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

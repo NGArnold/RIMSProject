@@ -16,7 +16,7 @@ const itemSchema = new Schema({
     Brand: String,
     Product: String, 
     Size: String, 
-    Quantity: Number, 
+    Quantity: {type: Number, min: 0}, 
     Location: String, 
     Barcode: Number,
     Sold: { type: Number, default: 0 },
@@ -77,6 +77,19 @@ module.exports.getItemByBarcode = function (barcodeID) {
     return new Promise((resolve, reject) => {
         
         Item.find({ Barcode: barcodeID }).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+    });
+};
+
+module.exports.getItemByID = function (editID) {
+    return new Promise((resolve, reject) => {
+        
+        Item.find({ _id: editID }).lean().exec()
         .then((data) => {
             resolve(data);
 
@@ -199,7 +212,7 @@ module.exports.increaseQuantity = function (increaseID) {
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: increaseID}, {$inc: { Quantity: 1 }})
+        Item.findOneAndUpdate({_id: increaseID}, {$inc: { Quantity: 1 }})
         .then(() => {
             resolve();
 
@@ -212,9 +225,10 @@ module.exports.increaseQuantity = function (increaseID) {
 
 
 module.exports.decreaseQuantity = function (decreaseID) {
+    
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: decreaseID}, {$inc: { Quantity: -1 }})
+        Item.findOneAndUpdate({_id: decreaseID}, {$inc: { Quantity: -1 }})
         .then(() => {
             resolve();
 
@@ -228,7 +242,7 @@ module.exports.decreaseQuantity = function (decreaseID) {
 module.exports.deleteItem = function (deleteID) {
     return new Promise((resolve, reject) => {
 
-        Item.deleteOne({ Barcode: deleteID }).exec()
+        Item.deleteOne({ _id: deleteID }).exec()
         .then(() => {
             resolve();
 
@@ -247,7 +261,7 @@ module.exports.sellItem = function (sellData) {
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Quantity: -locQuantity }})
+        Item.findOneAndUpdate({Barcode: locBarcode, Quantity: {$gte: 0}}, {$inc: { Quantity: -locQuantity }})
         .then(() => {
             resolve();
 
@@ -301,14 +315,13 @@ module.exports.getItemBySearch = function (searchID) {
 
 module.exports.editItem = function (editData) {
 
-
     return new Promise((resolve, reject) => {
         for (const prop in editData) {
             if (editData[prop] == "") {
                 editData[prop] = null;
             }
         } 
-        Item.findOneAndUpdate({Barcode: editData.Barcode},
+        Item.findOneAndUpdate({_id: editData.itemID},
             {Brand: editData.Brand, 
             Product: editData.Product,
             Size: editData.Size,

@@ -175,9 +175,9 @@ app.get("/inventory/delete/:deleteID", (req, res) => {
   });
 });
 
-app.get("/editItem/:Barcode", (req, res) => {
+app.get("/editItem/:editID", (req, res) => {
   
-  dataServ.getItemByBarcode(req.params.Barcode).then((data) => {
+  dataServ.getItemByID(req.params.editID).then((data) => {
       res.render("editItem", { item: data, layout: false });
   }).catch((err) => {
       res.render("editItem", { message: "no results", layout: false });
