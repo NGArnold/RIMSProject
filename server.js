@@ -203,35 +203,48 @@ app.post("/inventory/add", function (req, res) {
 
 app.post("/home/sell", function (req, res) {
 
-  dataServ.sellItem(req.body)
+  if (req.body.Quantity != "" && req.body.Barcode != "") {
+    dataServ.sellItem(req.body)
     .then(() => {
       dataServ.salesStats(req.body)
         .then(() => {
           res.redirect("/home");
         });
     });
+  } else {
+    res.redirect("/home");
+  }
 });
 
 app.post("/inventory/sell", function (req, res) {
 
-  dataServ.sellItem(req.body)
+  if (req.body.Quantity != "" && req.body.Barcode != "") {
+    dataServ.sellItem(req.body)
     .then(() => {
       dataServ.salesStats(req.body)
         .then(() => {
           res.redirect("/inventory");
         });
     });
+  } else {
+    res.redirect("/inventory");
+  }
+  
 });
 
 app.post("/sales/sell", function (req, res) {
 
-  dataServ.sellItem(req.body)
+  if (req.body.Quantity != "" && req.body.Barcode != "") {
+    dataServ.sellItem(req.body)
     .then(() => {
       dataServ.salesStats(req.body)
         .then(() => {
           res.redirect("/sales");
         });
     });
+  } else {
+    res.redirect("/sales");
+  }
 
 });
 
