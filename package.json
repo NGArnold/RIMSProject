@@ -23,6 +23,7 @@
     "express": "^4.17.2",
     "express-handlebars": "^6.0.3",
     "floatthead": "^2.2.4",
+    "jquery": "^3.6.0",
     "mongoose": "^6.2.10",
     "sticky-table-headers": "^0.1.24"
   }
