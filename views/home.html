@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
         integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="sidebar.css">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="/sidebar.css">
+    <link rel="stylesheet" href="/home.css">
+    <link rel="stylesheet" href="/popup.css">
 
     <!-- New CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +37,7 @@
                 <li><a href="/home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
                 <li><a href="/Inventory"><i class="fas fa-boxes    "></i> Inventory</a></li>
                 <li><a href="/Sales">&nbsp;<i class="fa fa-usd" aria-hidden="true"></i>&nbsp;&nbsp;Sales</a></li>
-                <li><button type="button" class="btn btn-success">Sell</button></li>
+                <li><button type="button" class="btn btn-success" id="sell-button">Sell</button></li>
             </ul>
         </div>
 
@@ -91,6 +92,32 @@
         </div>
     </div>
     <!-- Optional JavaScript -->
+    <div class="bg-modal">
+        <div class="modal-content">
+            <div class="close">+</div>
+            <form method="post" action="/home/sell" id="sellitemform">
+                <label for="Quantity">Quantity</label>
+                <input type="text" id="Quantity" name="Quantity" placeholder="0" />
+                <label for="Barcode">Barcode/UPC #</label>
+                <input id="Barcode" name="Barcode" type="text" placeholder="Enter UPC #" />
+
+                <input type="submit" class="btn btn-success" value="Sell" />
+            </form>
+        </div>
+    </div>
+
+    <!-- Sell Pop Up Script -->
+    <script>
+        document.getElementById('sell-button').addEventListener('click',
+            function () {
+                document.querySelector('.bg-modal').style.display = 'flex';
+            });
+
+        document.querySelector('.close').addEventListener('click',
+            function () {
+                document.querySelector('.bg-modal').style.display = 'none';
+            });
+    </script>
 
     <!-- Menu toggle script-->
     <script>

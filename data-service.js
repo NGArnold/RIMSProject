@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 const mongoose =require ("mongoose");
+const { stat } = require("fs");
 var Schema = mongoose.Schema;
 // connect to your MongoDB Atlas Database
 mongoose.connect("mongodb+srv://user1:admin@rims.ssq4p.mongodb.net/RIMS?retryWrites=true&w=majority");
@@ -15,22 +16,15 @@ const itemSchema = new Schema({
     Brand: String,
     Product: String, 
     Size: String, 
-    Quantity: Number, 
+    Quantity: {type: Number, min: 0}, 
     Location: String, 
-    Barcode: Number
-});
-
-const topSellingSchema = new Schema({
-    Brand: String,
-    Product: String, 
-    Size: String, 
-    Quantity: Number,  
+    Barcode: String,
+    Sold: { type: Number, default: 0 },
     LatestSold: String
 });
 
 const User = mongoose.model('User', userSchema);
 const Item = mongoose.model('Item', itemSchema); 
-const TopSelling = mongoose.model('TopSelling', topSellingSchema);
 
 itemSchema.index(
     {
@@ -68,10 +62,8 @@ module.exports.addItem = function(inventoryData) {
 // setup function getItemByProductName
 module.exports.getItemByProductName = function (productNameID) {
     return new Promise((resolve, reject) => {
-        console.log(productNameID);
         Item.find({ Product: productNameID }).lean().exec()
         .then((data) => {
-            console.log(data);
             resolve(data);
 
         }).catch((error) => {
@@ -85,6 +77,19 @@ module.exports.getItemByBarcode = function (barcodeID) {
     return new Promise((resolve, reject) => {
         
         Item.find({ Barcode: barcodeID }).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+    });
+};
+
+module.exports.getItemByID = function (editID) {
+    return new Promise((resolve, reject) => {
+        
+        Item.find({ _id: editID }).lean().exec()
         .then((data) => {
             resolve(data);
 
@@ -166,12 +171,48 @@ module.exports.getAllItems = function() {
     });
 }
 
+module.exports.getItemsByStatistics = function(statID) {
+    
+    var organization = "desc";
+
+    if (statID == "notSellingWell") {
+        organization = "asc";
+    }
+
+    return new Promise((resolve, reject) => {
+
+        Item.find({}).sort({Sold: organization}).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
+    });
+}
+
+module.exports.getAllSoldItems = function(statID) {
+
+    return new Promise((resolve, reject) => {
+
+        Item.find({}).sort({Sold: "desc"}).lean().exec()
+        .then((data) => {
+            resolve(data);
+
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
+    });
+}
+
 
 module.exports.increaseQuantity = function (increaseID) {
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: increaseID}, {$inc: { Quantity: 1 }})
+        Item.findOneAndUpdate({_id: increaseID}, {$inc: { Quantity: 1 }})
         .then(() => {
             resolve();
 
@@ -184,9 +225,10 @@ module.exports.increaseQuantity = function (increaseID) {
 
 
 module.exports.decreaseQuantity = function (decreaseID) {
+    
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: decreaseID}, {$inc: { Quantity: -1 }})
+        Item.findOneAndUpdate({_id: decreaseID}, {$inc: { Quantity: -1 }})
         .then(() => {
             resolve();
 
@@ -200,7 +242,7 @@ module.exports.decreaseQuantity = function (decreaseID) {
 module.exports.deleteItem = function (deleteID) {
     return new Promise((resolve, reject) => {
 
-        Item.deleteOne({ Barcode: deleteID }).exec()
+        Item.deleteOne({ _id: deleteID }).exec()
         .then(() => {
             resolve();
 
@@ -214,12 +256,11 @@ module.exports.sellItem = function (sellData) {
 
     var values = Object.values(sellData);
 
-    locQuantity = parseInt(values[0]);
-    locBarcode = parseInt(values[1]);
+    var locQuantity = parseInt(values[0]);
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Quantity: -locQuantity }})
+        Item.findOneAndUpdate({Barcode: sellData.Barcode, Quantity: {$gte: 0}}, {$inc: { Quantity: -locQuantity }})
         .then(() => {
             resolve();
 
@@ -228,30 +269,36 @@ module.exports.sellItem = function (sellData) {
         });
         
     });
-}
+};
 
-module.exports.topSelling = function(saleData) {
+module.exports.salesStats = function(sellData) {
+
+    var values = Object.values(sellData);
+
+    var locQuantity = parseInt(values[0]);
+
+    const d = new Date();
+    var day = d.getDate();
+    var month = d.getMonth() + 1;
+    var year = d.getFullYear();
+    var date = month + "/" + day + "/" + year;
 
     return new Promise(function (resolve, reject) {
+        Item.findOneAndUpdate({Barcode: sellData.Barcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
+        .then(() => {
+            resolve();
 
-        for (const prop in saleData) {
-            if (saleData[prop] == "") {
-                saleData[prop] = null;
-            }
-        }
-            TopSelling.create(saleData)
-            .then(() => {
-                resolve();
-            }).catch((error) => {
-                reject("Unable to create sale data.");
-            });
+        }).catch((error) => {
+            reject("No results returned.");
+        });
+        
     });
     
 };
 
 module.exports.getItemBySearch = function (searchID) {
     return new Promise((resolve, reject) => {
-        
+
         Item.find({$text: {$search: "\"" + searchID + "\"" }}).lean().exec()
         .then((data) => {
             resolve(data);
@@ -262,4 +309,28 @@ module.exports.getItemBySearch = function (searchID) {
     });
 };
 
+module.exports.editItem = function (editData) {
 
+    return new Promise((resolve, reject) => {
+        for (const prop in editData) {
+            if (editData[prop] == "") {
+                editData[prop] = null;
+            }
+        } 
+        Item.findOneAndUpdate({_id: editData.itemID},
+            {Brand: editData.Brand, 
+            Product: editData.Product,
+            Size: editData.Size,
+            Quantity: editData.Quantity, 
+            Location: editData.Location,
+            Barcode: editData.Barcode}   
+            )
+        .then(() => {
+            resolve();
+
+        }).catch((error) => {
+            reject("Unable to update item.");
+        });
+        
+    });
+};
