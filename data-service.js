@@ -260,7 +260,7 @@ module.exports.sellItem = function (sellData) {
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: sellData.Barcode, Quantity: {$gte: 0}}, {$inc: { Quantity: -locQuantity }})
+        Item.findOneAndUpdate({Barcode: sellData.Barcode, Quantity: {$gte: locQuantity}}, {$inc: { Quantity: -locQuantity }})
         .then(() => {
             resolve();
 
@@ -284,7 +284,7 @@ module.exports.salesStats = function(sellData) {
     var date = month + "/" + day + "/" + year;
 
     return new Promise(function (resolve, reject) {
-        Item.findOneAndUpdate({Barcode: sellData.Barcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
+        Item.findOneAndUpdate({Barcode: sellData.Barcode, Quantity: {$gte: locQuantity}}, {$inc: { Sold: locQuantity }, LatestSold: date })
         .then(() => {
             resolve();
 
