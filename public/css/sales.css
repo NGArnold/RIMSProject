@@ -1,3 +1,28 @@
+
+  .col-lg-12 {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+    .col-lg-12 tbody {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    height: 800px;
+  }
+  .col-lg-12 thead tr {
+    display: block;
+  }
+  .col-lg-12 th,
+  .col-lg-12  td {
+    padding: 5px 10px;
+    width: 365px;
+  }
+  th {
+    background: #ABDD93;
+  }
+
+
 body {
     height: 100%;
     margin: 0;
