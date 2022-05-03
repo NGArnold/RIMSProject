@@ -18,7 +18,7 @@ const itemSchema = new Schema({
     Size: String, 
     Quantity: {type: Number, min: 0}, 
     Location: String, 
-    Barcode: Number,
+    Barcode: String,
     Sold: { type: Number, default: 0 },
     LatestSold: String
 });
@@ -257,11 +257,10 @@ module.exports.sellItem = function (sellData) {
     var values = Object.values(sellData);
 
     var locQuantity = parseInt(values[0]);
-    var locBarcode = parseInt(values[1]);
 
     return new Promise((resolve, reject) => {
         
-        Item.findOneAndUpdate({Barcode: locBarcode, Quantity: {$gte: 0}}, {$inc: { Quantity: -locQuantity }})
+        Item.findOneAndUpdate({Barcode: sellData.Barcode, Quantity: {$gte: 0}}, {$inc: { Quantity: -locQuantity }})
         .then(() => {
             resolve();
 
@@ -277,7 +276,6 @@ module.exports.salesStats = function(sellData) {
     var values = Object.values(sellData);
 
     var locQuantity = parseInt(values[0]);
-    var locBarcode = parseInt(values[1]);
 
     const d = new Date();
     var day = d.getDate();
@@ -285,10 +283,8 @@ module.exports.salesStats = function(sellData) {
     var year = d.getFullYear();
     var date = month + "/" + day + "/" + year;
 
-    
-
     return new Promise(function (resolve, reject) {
-        Item.findOneAndUpdate({Barcode: locBarcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
+        Item.findOneAndUpdate({Barcode: sellData.Barcode}, {$inc: { Sold: locQuantity }, LatestSold: date })
         .then(() => {
             resolve();
 
@@ -302,7 +298,7 @@ module.exports.salesStats = function(sellData) {
 
 module.exports.getItemBySearch = function (searchID) {
     return new Promise((resolve, reject) => {
-        
+
         Item.find({$text: {$search: "\"" + searchID + "\"" }}).lean().exec()
         .then((data) => {
             resolve(data);
