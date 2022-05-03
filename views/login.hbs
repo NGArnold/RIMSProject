@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="login-page.css">
+  <style>
+    p {text-align: center; vertical-align: text-top; color: red;}
+  </style>
+</head>
+
+<body>
+  <div>
+    <div><p>{{errorMsg}}</p></div>
+<div><img src="./Revive.jpg" class="myimage"></div>
+
+<div> 
+  <main id="main-holder">
+    <h1 id="login-header">Login</h1>
+    <form method="post" id="login-form" action="/login">
+      <input type="text" name="username" id="username" class="login-form-field" placeholder="Username">
+      <input type="password" name="password" id="password" class="login-form-field" placeholder="Password">
+      <input type="submit" value="Login" id="login-form-submit"> 
+    </form>
+  </main>
+</div>
+  </div>
+
+</body>
+
+</html>
