@@ -1,41 +1,12 @@
 
   .table-responsive {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-  }
-    .table-responsive tbody {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    height: 800px;
-  }
-  .table-responsive thead tr {
-    display: block;
-  }
-  .table-responsive th,
-  .table-responsive  td {
-    padding: 5px 10px;
-    width: 200px;
-  }
-  th {
-    background: #ABDD93;
-  }
-  #customers th:nth-child(8) {
-    background-color: white;
-    border: none;
-    width: 5px;
-  }
-  #customers th:nth-child(9) {
-    background-color: white;
-    border: none;
-    width: 5px;
+    overflow-y: auto;
+    height: 80vh;
   }
 
-  #customers th:nth-child(10) {
-    background-color: white;
-    border: none;
-    width: 5px;
+  .table-responsive thead th {
+    position: sticky;
+    top: 0;
   }
 
 
@@ -44,24 +15,32 @@
   border-collapse: collapse;
   margin: 0 auto;
   width: 100%;
-  position: relative
+  
+ 
+}
+#customers thead th {
+  position: sticky;
+  top: 0;
 }
 #customers td, #customers th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 8px 16px;
+  
 }
-#customers tr.scroll {
-  display: table;
-  width: 80%;
-  position: absolute;
-}
+
 #customers tr:nth-child(even){background-color: #f2f2f2;}
 
-#customers tr:hover {background-color: #ddd;}
+
+
+#customers tbody tr:hover {background-color: #ddd;}
+
+
 
 #customers td:nth-child(1) {
   background-color: white;
   border: none;
+  align-content: right;
+  
 }
 #customers td:nth-child(8) {
   background-color: white;
@@ -71,7 +50,14 @@
 #customers th:nth-child(1) {
   background-color: white;
   border: none;
+  
 }
+
+#customers th:nth-child(8) {
+  background-color: white;
+  border: none;
+  
+} 
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -93,5 +79,5 @@
 }
 
 h1 {
-  padding-left: 20px;
+  padding-left: 180px;
 }

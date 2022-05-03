@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/sales.css">
   <link rel="stylesheet" href="/popup.css">
 
+
 </head>
 
 <body>
@@ -58,37 +59,38 @@
 
             <h4>Product Details</h4>
 
-            <table class="table" id="products">
-              <thead>
-                <tr>
-                  <th>Brand</th>
-                  <th>Product Name</th>
-                  <th>Size</th>
-                  <th>Sold</th>
-                  <th>Latest Sold</th>
-                </tr>
-              </thead>
+            <div class="table-responsive">
+              <table class="table" id="products">
+                <thead>
+                  <tr>
+                    <th>Brand</th>
+                    <th>Product Name</th>
+                    <th>Size</th>
+                    <th>Sold</th>
+                    <th>Latest Sold</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {{#each items}}
-                <tr>
-                  <td>{{Brand}}</td>
-                  <td>{{Product}}</td>
-                  <td>{{Size}}</td>
-                  <td>{{Sold}}</td>
-                  <td>{{LatestSold}}</td>
-                </tr>
+                <tbody>
+                  {{#each items}}
+                  <tr>
+                    <td>{{Brand}}</td>
+                    <td>{{Product}}</td>
+                    <td>{{Size}}</td>
+                    <td>{{Sold}}</td>
+                    <td>{{LatestSold}}</td>
+                  </tr>
 
 
-                {{else}}
-                <!--<div class="col-md-12 text-center">-->
-                <strong>No Items Available</strong>
-                <!--</div>-->
-                {{/each}}
+                  {{else}}
+                  <!--<div class="col-md-12 text-center">-->
+                  <strong>No Items Available</strong>
+                  <!--</div>-->
+                  {{/each}}
 
-              </tbody>
-            </table>
-
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
