@@ -2,7 +2,7 @@
 
 #sidebar-wrapper {
     z-index: 1;
-    position: absolute;
+    position: fixed;
     width: 0;
     height: 100%;
     overflow-y: hidden;
@@ -23,12 +23,20 @@
   #wrapper.menuDisplayed #sidebar-wrapper {
     width: 250px;
   }
+
+  #wrapper.menuDisplayed #sidebar-wrapper li button {
+    display: block;
+  }
   
   /* Displays main content to the right of the sidebar so there isn't overlap*/
   
   #wrapper.menuDisplayed #page-content-wrapper {
     padding-left: 250px;
   }
+
+ #menu-toggle {
+   position: fixed;
+ }
   
   /* Sidebar styling*/
   
@@ -53,8 +61,9 @@
   }
   
   .sidebar-nav li button{
-    position: absolute; 
+    position: fixed; 
     bottom: 10px;
     left: 25px;
     width: 200px !important;
+    display: none;
   }

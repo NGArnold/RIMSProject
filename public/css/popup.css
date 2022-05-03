@@ -95,3 +95,44 @@
     right:15px;
 }
 
+/*Add edit button CSS*/
+.editItem-modal {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editItem-modal-content {
+    width: 500px;
+    height: 650px;
+    background-color: #2C3E50;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.editItem-modal-content form input[type=text] {
+    width: 50%;
+    display: block;
+    margin: 15px auto;
+}
+
+.editItem-modal-content form p, label{
+    color: #ddd;
+}
+
+.closeEditItem {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+.closeEditItem:hover {
+    color: #ddd;
+}
