@@ -1,26 +1,19 @@
 
-  .col-lg-12 {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
+  .table-responsive {
+    overflow-y: auto;
+    height: 80vh;
   }
-    .col-lg-12 tbody {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    height: 800px;
+    
+  .table-responsive thead th {
+    position: sticky;
+    top: 0;
   }
-  .col-lg-12 thead tr {
-    display: block;
-  }
-  .col-lg-12 th,
-  .col-lg-12  td {
+  .table-responsive th,
+  .table-responsive  td {
     padding: 5px 10px;
     width: 365px;
   }
-  th {
-    background: #ABDD93;
-  }
+  
 
 
 body {
