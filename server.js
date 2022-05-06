@@ -46,8 +46,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // A simple user object, hardcoded for this example
 const user = {
-  username: "sampleuser",
-  password: "samplepassword",
+  username: "Revive2338",
+  password: "Hair2338",
 };
 
 // Setup a route on the 'root' of the url to redirect to /login
